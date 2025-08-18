@@ -69,8 +69,14 @@ export default function Contact() {
   {
     icon: PhoneIcon,
     title: 'Phone',
-    value: getCompanyInfo.contactPhone(),
-    href: `tel:${getCompanyInfo.contactPhone()}`,            // optionally strip spaces if needed
+    value: getCompanyInfo.contactphone(),
+    href: `tel:${getCompanyInfo.contactphone()}`,            // optionally strip spaces if needed
+  },
+      {
+    icon: PhoneIcon,
+    title: 'Whatsapp',
+    value: getCompanyInfo.phoneWA(),
+    href: `{https://wa.me//${contact.phoneWA}?text=Hello%20I%20am%20interested`},            // optionally strip spaces if needed
   },
   {
     icon: MapPinIcon,
@@ -81,7 +87,7 @@ export default function Contact() {
   {
     icon: ClockIcon,
     title: 'Business Hours',
-    value: getCompanyInfo.businessHours(),
+    value: contact.businessHours(),
     href: null, 
   },
 ]
