@@ -33,7 +33,7 @@ export const companyConfig = {
     email: 'casimir@bonnevalsolutions.com',
     phone: '+33 (0) 6 09 55 83 96',
     phoneFormatted: '+33 1 6 09 55 83 96',
-    phoneWA: '+33609558396',
+    phoneWA: '33609558396',
     location: 'France (Remote & On-site)',
     businessHours: '24/7 Time Zone Agnostic',
     timezone: 'CET (Central European Time)',
