@@ -1,12 +1,8 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { 
-  BuildingOfficeIcon, 
-  UserGroupIcon, 
-  LightBulbIcon,
-  CheckCircleIcon
-} from '@heroicons/react/24/outline'
+import { LightBulbIcon, BuildingOfficeIcon, UserGroupIcon, CheckCircleIcon } from '@heroicons/react/24/outline'
+import { getCompanyInfo, business } from '@/config/company'
 
 const targetClients = [
   'Offshore logistics companies',
@@ -60,14 +56,14 @@ export default function About() {
           >
             <div>
               <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
                 viewport={{ once: true }}
                 className="inline-flex items-center px-4 py-2 rounded-full bg-secondary-100 text-secondary-800 text-sm font-medium mb-6"
               >
                 <LightBulbIcon className="w-4 h-4 mr-2" />
-                About Bonneval Solutions
+                About {getCompanyInfo.name()}
               </motion.div>
               
               <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
@@ -76,7 +72,7 @@ export default function About() {
               </h2>
               
               <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                Bonneval Solutions is a boutique AI automation consultancy specializing in transforming 
+                {getCompanyInfo.name()} is a boutique AI automation consultancy specializing in transforming 
                 business operations through intelligent automation and process optimization. We focus on 
                 delivering practical, scalable solutions that drive real business value.
               </p>
@@ -94,7 +90,7 @@ export default function About() {
                 Target Clients
               </h3>
               <div className="grid sm:grid-cols-2 gap-3">
-                {targetClients.map((client, index) => (
+                {business.targetClients.map((client, index) => (
                   <motion.div
                     key={client}
                     initial={{ opacity: 0, x: -10 }}
@@ -153,7 +149,7 @@ export default function About() {
                 Technology Stack
               </h3>
               <div className="flex flex-wrap gap-2">
-                {technologies.map((tech, index) => (
+                {business.technologies.map((tech, index) => (
                   <motion.span
                     key={tech}
                     initial={{ opacity: 0, scale: 0.9 }}

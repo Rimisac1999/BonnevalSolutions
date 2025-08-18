@@ -1,8 +1,9 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import { Bars3Icon, XMarkIcon, ChevronDownIcon } from '@heroicons/react/24/outline'
-import { getCompanyInfo } from '@/config/company'
+import { getCompanyInfo, external } from '@/config/company'
 
 const tools = [
   { name: 'Memorizer', href: '/memorizer' },
@@ -107,7 +108,7 @@ export default function ToolsHeader() {
         {/* Desktop right side */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center gap-4">
           <a
-            href="https://intranet.bonnevalsolutions.com"
+            href={external.intranet}
             className="btn-secondary"
             target="_blank"
             rel="noopener noreferrer"
@@ -115,7 +116,7 @@ export default function ToolsHeader() {
             Intranet
           </a>
           <a
-            href="https://client.bonnevalsolutions.com"
+            href={external.client}
             className="btn-secondary"
             target="_blank"
             rel="noopener noreferrer"
@@ -206,7 +207,7 @@ export default function ToolsHeader() {
                 {/* External links */}
                 <div className="pt-6 border-t border-gray-200 space-y-3">
                   <a
-                    href="https://intranet.bonnevalsolutions.com"
+                    href={external.intranet}
                     className="block text-lg font-medium text-gray-900 hover:text-primary-600 transition-colors py-2"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -215,7 +216,7 @@ export default function ToolsHeader() {
                     Intranet
                   </a>
                   <a
-                    href="https://client.bonnevalsolutions.com"
+                    href={external.client}
                     className="block text-lg font-medium text-gray-900 hover:text-primary-600 transition-colors py-2"
                     target="_blank"
                     rel="noopener noreferrer"

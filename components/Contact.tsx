@@ -8,7 +8,7 @@ import {
   MapPinIcon,
   ClockIcon
 } from '@heroicons/react/24/outline'
-import { getCompanyInfo, companyConfig } from '@/config/company' 
+import { getCompanyInfo, contact } from '@/config/company' 
 
 
 
@@ -75,7 +75,7 @@ export default function Contact() {
   {
     icon: MapPinIcon,
     title: 'Location',
-    value: companyConfig.contact.location,                   // or add a getter if you prefer
+    value: contact.location,                   // or add a getter if you prefer
     href: null,
   },
   {
@@ -290,7 +290,7 @@ export default function Contact() {
             {/* Why Choose Us */}
             <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
               <h4 className="text-lg font-semibold text-gray-900 mb-4">
-                Why Choose Bonneval Solutions?
+                Why Choose {getCompanyInfo.name()}?
               </h4>
               <ul className="space-y-3">
                 <li className="flex items-start">

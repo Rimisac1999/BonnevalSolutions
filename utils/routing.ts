@@ -1,3 +1,5 @@
+import { getDomainConfig } from '@/config/company'
+
 // Utility functions for dynamic routing based on environment
 
 // Get the current domain configuration
@@ -5,49 +7,41 @@ export const getCurrentDomain = () => {
   // Check if we're in the browser
   if (typeof window !== 'undefined') {
     const hostname = window.location.hostname
+    const domainConfig = getDomainConfig()
     
-    if (hostname === 'preview.bonnevalsolutions.com') {
+    if (hostname === domainConfig.main && !domainConfig.isProduction) {
       return {
-        main: 'preview.bonnevalsolutions.com',
-        tools: 'preview-tools.bonnevalsolutions.com',
+        main: domainConfig.main,
+        tools: domainConfig.tools,
         isProduction: false
       }
-    } else if (hostname === 'preview-tools.bonnevalsolutions.com') {
+    } else if (hostname === domainConfig.tools && !domainConfig.isProduction) {
       return {
-        main: 'preview.bonnevalsolutions.com',
-        tools: 'preview-tools.bonnevalsolutions.com',
+        main: domainConfig.main,
+        tools: domainConfig.tools,
         isProduction: false
       }
-    } else if (hostname === 'tools.bonnevalsolutions.com') {
+    } else if (hostname === domainConfig.tools && domainConfig.isProduction) {
       return {
-        main: 'bonnevalsolutions.com',
-        tools: 'tools.bonnevalsolutions.com',
+        main: domainConfig.main,
+        tools: domainConfig.tools,
         isProduction: true
       }
-    } else if (hostname === 'bonnevalsolutions.com' || hostname === 'www.bonnevalsolutions.com') {
+    } else if (hostname === domainConfig.main || hostname === `www.${domainConfig.main}`) {
       return {
-        main: 'bonnevalsolutions.com',
-        tools: 'tools.bonnevalsolutions.com',
+        main: domainConfig.main,
+        tools: domainConfig.tools,
         isProduction: true
       }
     }
   }
   
   // Fallback for server-side rendering
-  const commitRef = process.env.VERCEL_GIT_COMMIT_REF
-  const isMainBranch = commitRef ? commitRef === 'main' : true
-  if (isMainBranch) {
-    return {
-      main: 'bonnevalsolutions.com',
-      tools: 'tools.bonnevalsolutions.com',
-      isProduction: true
-    }
-  } else {
-    return {
-      main: 'preview.bonnevalsolutions.com',
-      tools: 'preview-tools.bonnevalsolutions.com',
-      isProduction: false
-    }
+  const domainConfig = getDomainConfig()
+  return {
+    main: domainConfig.main,
+    tools: domainConfig.tools,
+    isProduction: domainConfig.isProduction
   }
 }
 

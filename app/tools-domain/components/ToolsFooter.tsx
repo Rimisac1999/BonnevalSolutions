@@ -1,4 +1,4 @@
-import { getCompanyInfo } from '@/config/company'
+import { getCompanyInfo, external, legal, social, contact } from '@/config/company'
 
 export default function ToolsFooter() {
   return (
@@ -57,7 +57,7 @@ export default function ToolsFooter() {
                 </a>
               </li>
               <li>
-                <a href="https://bonnevalsolutions.com" className="text-gray-600 hover:text-gray-900 transition-colors">
+                <a href={social.website} className="text-gray-600 hover:text-gray-900 transition-colors">
                   Main Site
                 </a>
               </li>
@@ -72,7 +72,7 @@ export default function ToolsFooter() {
             <ul className="space-y-3">
               <li>
                 <a
-                  href="https://intranet.bonnevalsolutions.com"
+                  href={external.intranet}
                   className="text-gray-600 hover:text-gray-900 transition-colors"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -82,7 +82,7 @@ export default function ToolsFooter() {
               </li>
               <li>
                 <a
-                  href="https://client.bonnevalsolutions.com"
+                  href={external.client}
                   className="text-gray-600 hover:text-gray-900 transition-colors"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -92,7 +92,7 @@ export default function ToolsFooter() {
               </li>
               <li>
                 <a
-                  href="mailto:contact@bonnevalsolutions.com"
+                  href={`mailto:${contact.email}`}
                   className="text-gray-600 hover:text-gray-900 transition-colors"
                 >
                   Contact Us
@@ -109,13 +109,13 @@ export default function ToolsFooter() {
               {getCompanyInfo.copyright()}
             </p>
             <div className="mt-4 md:mt-0 flex space-x-6 text-sm text-gray-500">
-              <a href="/privacy" className="hover:text-gray-900 transition-colors">
+              <a href={legal.privacyPolicy} className="hover:text-gray-900 transition-colors">
                 Privacy Policy
               </a>
-              <a href="/terms" className="hover:text-gray-900 transition-colors">
+              <a href={legal.termsOfService} className="hover:text-gray-900 transition-colors">
                 Terms of Service
               </a>
-              <a href="/cookies" className="hover:text-gray-900 transition-colors">
+              <a href={legal.cookiePolicy} className="hover:text-gray-900 transition-colors">
                 Cookie Policy
               </a>
             </div>

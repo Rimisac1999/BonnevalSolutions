@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { legal } from '@/config/company'
+import { getCompanyInfo, legal } from '@/config/company'
 
 const navigation = {
   services: [
@@ -41,7 +41,7 @@ export default function Footer() {
               className="lg:col-span-2"
             >
               <div className="mb-6">
-                <span className="text-2xl font-bold text-gradient">Bonneval Solutions</span>
+                <span className="text-2xl font-bold text-gradient">{getCompanyInfo.name()}</span>
               </div>
               <p className="text-gray-300 mb-6 leading-relaxed">
                 Expert AI automation and process optimization consultancy. 
@@ -121,7 +121,7 @@ export default function Footer() {
           className="border-t border-gray-800 py-8"
         >
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm">© 2024 Bonneval Solutions. All rights reserved.</p>
+            <p className="text-gray-400 text-sm">{getCompanyInfo.copyright()}</p>
             <div className="flex items-center space-x-6 mt-4 md:mt-0">
               <a href={legal.privacyPolicy} className="text-gray-400 hover:text-white transition-colors text-sm">Privacy Policy</a>
               <a href={legal.termsOfService} className="text-gray-400 hover:text-white transition-colors text-sm">Terms of Service</a>
