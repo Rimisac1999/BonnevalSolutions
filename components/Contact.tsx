@@ -81,7 +81,7 @@ export default function Contact() {
     {
       icon: MapPinIcon,
       title: 'Location',
-      value: getCompanyInfo.location ? getCompanyInfo.location() : 'N/A',
+      value: getCompanyInfo.location(),
       href: null,
     },
     {

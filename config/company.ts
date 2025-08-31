@@ -108,6 +108,7 @@ export const getCompanyInfo = {
   founded: () => companyConfig.founded,
   contactEmail: () => companyConfig.contact.email,
   contactPhone: () => companyConfig.contact.phone,
+  location: () => companyConfig.contact.location,
   businessHours: () => companyConfig.contact.businessHours,
   copyright: () => companyConfig.legal.copyright,
   tagline: () => companyConfig.branding.tagline,
