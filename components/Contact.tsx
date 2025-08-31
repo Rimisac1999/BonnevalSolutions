@@ -60,37 +60,37 @@ export default function Contact() {
   }
 
   const contactInfo = [
-  {
-    icon: EnvelopeIcon,
-    title: 'Email',
-    value: getCompanyInfo.contactEmail(),                    // ✅ correct name + call
-    href: `mailto:${getCompanyInfo.contactEmail()}`,         // ✅ proper template string
-  },
-  {
-    icon: PhoneIcon,
-    title: 'Phone',
-    value: getCompanyInfo.contactphone(),
-    href: `tel:${getCompanyInfo.contactphone()}`,            // optionally strip spaces if needed
-  },
-      {
-    icon: PhoneIcon,
-    title: 'Whatsapp',
-    value: getCompanyInfo.phoneWA(),
-    href: `{https://wa.me//${contact.phoneWA}?text=Hello%20I%20am%20interested`},            // optionally strip spaces if needed
-  },
-  {
-    icon: MapPinIcon,
-    title: 'Location',
-    value: contact.location,                   // or add a getter if you prefer
-    href: null,
-  },
-  {
-    icon: ClockIcon,
-    title: 'Business Hours',
-    value: contact.businessHours(),
-    href: null, 
-  },
-]
+    {
+      icon: EnvelopeIcon,
+      title: 'Email',
+      value: getCompanyInfo.contactEmail(),
+      href: `mailto:${getCompanyInfo.contactEmail()}`,
+    },
+    {
+      icon: PhoneIcon,
+      title: 'Phone',
+      value: getCompanyInfo.contactPhone(),
+      href: `tel:${getCompanyInfo.contactPhone()}`,
+    },
+    {
+      icon: PhoneIcon,
+      title: 'Whatsapp',
+      value: phone, // use the already formatted phone variable
+      href: `https://wa.me/${phoneDigits}?text=Hello%20I%20am%20interested`,
+    },
+    {
+      icon: MapPinIcon,
+      title: 'Location',
+      value: getCompanyInfo.location ? getCompanyInfo.location() : 'N/A',
+      href: null,
+    },
+    {
+      icon: ClockIcon,
+      title: 'Business Hours',
+      value: getCompanyInfo.businessHours(),
+      href: null,
+    },
+  ]
 
   return (
     <section id="contact" className="section-padding bg-white">
