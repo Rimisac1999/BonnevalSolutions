@@ -9,48 +9,35 @@ import {
   WrenchScrewdriverIcon,
   ComputerDesktopIcon
 } from '@heroicons/react/24/outline'
+import { external } from '@/config/company'
 
 const services = [
   {
-    name: 'Workflow Automation',
-    description: 'Streamline repetitive tasks and complex workflows using AI-powered automation tools. Perfect for logistics, engineering, and operations-heavy businesses.',
-    icon: CogIcon,
-    features: ['Process mapping & analysis', 'Custom automation workflows', 'Integration with existing systems', 'Performance monitoring'],
-    color: 'primary'
-  },
-  {
-    name: 'AI Agents & Chatbots',
-    description: 'Intelligent conversational agents using platforms like Voiceflow and ChatGPT. Automate customer service, internal communications, and data processing.',
+    name: 'AI Automation',
+    description: 'Voice & text AI agents, social media automation, outreach campaigns, and intelligent workflow solutions.',
     icon: ChatBubbleLeftRightIcon,
-    features: ['Custom AI chatbots', 'Voiceflow integration', 'Multi-language support', 'Analytics & insights'],
-    color: 'secondary'
-  },
-  {
-    name: 'Process Digitization',
-    description: 'Transform paper-based and manual processes into efficient digital workflows. From procurement to maintenance planning and reporting.',
-    icon: DocumentTextIcon,
-    features: ['Digital form creation', 'Automated approvals', 'Document management', 'Compliance tracking'],
+    features: ['Voice & text AI agents', 'Social media automation', 'Outreach campaigns', 'Process automation'],
     color: 'primary'
   },
   {
-    name: 'Data Analytics & Reporting',
-    description: 'Turn your data into actionable insights with automated reporting and analytics dashboards.',
-    icon: ChartBarIcon,
-    features: ['Custom dashboards', 'Automated reporting', 'KPI tracking', 'Predictive analytics'],
-    color: 'secondary'
-  },
-  {
-    name: 'System Integration',
-    description: 'Seamlessly connect your existing tools and platforms using n8n, Airtable, and other integration platforms.',
-    icon: WrenchScrewdriverIcon,
-    features: ['API integrations', 'Data synchronization', 'Custom connectors', 'Real-time updates'],
-    color: 'primary'
-  },
-  {
-    name: 'Custom AI Solutions',
-    description: 'Bespoke AI tools and applications tailored to your specific business needs and industry requirements.',
+    name: 'Website Development',
+    description: 'Custom-built modern websites using Next.js, React, and other cutting-edge frameworks.',
     icon: ComputerDesktopIcon,
-    features: ['Custom AI models', 'Industry-specific solutions', 'Scalable architecture', 'Ongoing support'],
+    features: ['Modern frameworks', 'Responsive design', 'SEO optimized', 'Fast performance'],
+    color: 'secondary'
+  },
+  {
+    name: 'Website Migration',
+    description: 'Migrate from WordPress, Shopify, or legacy platforms to modern, maintainable solutions.',
+    icon: WrenchScrewdriverIcon,
+    features: ['Platform migration', 'Data preservation', 'SEO continuity', 'Performance boost'],
+    color: 'primary'
+  },
+  {
+    name: 'ERP Solutions',
+    description: 'Small-scale ERP development, implementation advice, and integration for growing businesses.',
+    icon: CogIcon,
+    features: ['Custom ERP development', 'Implementation advice', 'System integration', 'Training & support'],
     color: 'secondary'
   }
 ]
@@ -70,11 +57,11 @@ export default function Services() {
             Our <span className="text-gradient">Services</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Comprehensive AI automation and process optimization solutions designed to transform your business operations
+            Comprehensive digital solutions from AI automation to modern web development and ERP systems
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 gap-8">
           {services.map((service, index) => (
             <motion.div
               key={service.name}
@@ -130,17 +117,27 @@ export default function Services() {
         >
           <div className="bg-gradient-to-r from-primary-50 to-secondary-50 rounded-2xl p-8">
             <h3 className="text-2xl font-bold text-gray-900 mb-4">
-              Ready to Transform Your Operations?
+              Ready to Transform Your Business?
             </h3>
             <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              Let's discuss how AI automation can streamline your processes, reduce costs, and boost efficiency.
+              Let's discuss how we can help with AI automation, modern web development, or digital transformation.
             </p>
-            <a
-              href="#contact"
-              className="btn-primary inline-flex items-center"
-            >
-              Schedule a Consultation
-            </a>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href={external.calendly}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary inline-flex items-center justify-center"
+              >
+                Schedule a Consultation
+              </a>
+              <a
+                href="#contact"
+                className="btn-secondary inline-flex items-center justify-center"
+              >
+                Send a Message
+              </a>
+            </div>
           </div>
         </motion.div>
       </div>

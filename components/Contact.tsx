@@ -8,7 +8,7 @@ import {
   MapPinIcon,
   ClockIcon
 } from '@heroicons/react/24/outline'
-import { getCompanyInfo, companyConfig } from '@/config/company' 
+import { getCompanyInfo, companyConfig, external } from '@/config/company' 
 
 
 
@@ -31,25 +31,54 @@ export default function Contact() {
     e.preventDefault()
     setIsSubmitting(true)
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    
-    // For now, just show success message
-    setSubmitStatus('success')
-    setIsSubmitting(false)
-    
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setSubmitStatus('idle')
-      setFormData({
-        name: '',
-        email: '',
-        company: '',
-        phone: '',
-        service: '',
-        message: ''
+    try {
+      // Send to Web3Forms (free email service, no data storage)
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY || 'YOUR_ACCESS_KEY_HERE', // Get free key from web3forms.com
+          from_name: formData.name,
+          email: formData.email,
+          company: formData.company,
+          phone: formData.phone,
+          service: formData.service,
+          message: formData.message,
+          subject: `New Contact Form Submission from ${formData.name}`,
+          to: getCompanyInfo.contactEmail(),
+        }),
       })
-    }, 3000)
+
+      const result = await response.json()
+
+      if (result.success) {
+        setSubmitStatus('success')
+        
+        // Reset form after 3 seconds
+        setTimeout(() => {
+          setSubmitStatus('idle')
+          setFormData({
+            name: '',
+            email: '',
+            company: '',
+            phone: '',
+            service: '',
+            message: ''
+          })
+        }, 3000)
+      } else {
+        setSubmitStatus('error')
+        setTimeout(() => setSubmitStatus('idle'), 5000)
+      }
+    } catch (error) {
+      console.error('Form submission error:', error)
+      setSubmitStatus('error')
+      setTimeout(() => setSubmitStatus('idle'), 5000)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -113,9 +142,14 @@ export default function Contact() {
             viewport={{ once: true }}
             className="bg-gradient-to-br from-primary-50 to-secondary-50 rounded-2xl p-8"
           >
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">
-              Start Your Project
-            </h3>
+            <div className="mb-6">
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                Start Your Project
+              </h3>
+              <p className="text-gray-600 text-sm">
+                Send us a message or <a href={external.calendly} target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:text-primary-700 font-medium underline">schedule a consultation</a>
+              </p>
+            </div>
             
             {submitStatus === 'success' && (
               <motion.div
@@ -125,6 +159,18 @@ export default function Contact() {
               >
                 <p className="text-green-800 font-medium">
                   Thank you! Your message has been sent successfully. We'll get back to you within 24 hours.
+                </p>
+              </motion.div>
+            )}
+
+            {submitStatus === 'error' && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="mb-6 p-4 bg-red-100 border border-red-200 rounded-lg"
+              >
+                <p className="text-red-800 font-medium">
+                  Oops! Something went wrong. Please try again or email us directly at {getCompanyInfo.contactEmail()}.
                 </p>
               </motion.div>
             )}

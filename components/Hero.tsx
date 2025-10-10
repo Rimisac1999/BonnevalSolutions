@@ -5,18 +5,18 @@ import { ArrowRightIcon, SparklesIcon, CogIcon, ChartBarIcon } from '@heroicons/
 
 const features = [
   {
-    name: 'AI-Powered Automation',
-    description: 'Intelligent workflow automation using cutting-edge AI technologies',
+    name: 'AI Automation',
+    description: 'Voice & text agents, social media, outreach automation',
     icon: SparklesIcon,
   },
   {
-    name: 'Process Optimization',
-    description: 'Streamline operations and boost efficiency across your organization',
+    name: 'Web Development',
+    description: 'Custom websites with modern frameworks and best practices',
     icon: CogIcon,
   },
   {
-    name: 'Data-Driven Insights',
-    description: 'Transform data into actionable insights for better decision making',
+    name: 'Digital Solutions',
+    description: 'Platform migrations and small-scale ERP implementation',
     icon: ChartBarIcon,
   },
 ]
@@ -44,7 +44,7 @@ export default function Hero() {
                   className="inline-flex items-center px-4 py-2 rounded-full bg-primary-100 text-primary-800 text-sm font-medium"
                 >
                   <SparklesIcon className="w-4 h-4 mr-2" />
-                  AI Automation Experts
+                  Digital Solutions Expert
                 </motion.div>
                 
                 <motion.h1
@@ -53,8 +53,8 @@ export default function Hero() {
                   transition={{ duration: 0.6, delay: 0.3 }}
                   className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight"
                 >
-                  Transform Your Business with{' '}
-                  <span className="text-gradient">AI Automation</span>
+                  AI Solutions, Web Development &{' '}
+                  <span className="text-gradient">Digital Transformation</span>
                 </motion.h1>
                 
                 <motion.p
@@ -63,8 +63,7 @@ export default function Hero() {
                   transition={{ duration: 0.6, delay: 0.4 }}
                   className="text-xl text-gray-600 leading-relaxed"
                 >
-                  Expert consultancy specializing in AI-powered workflow automation, 
-                  process optimization, and digital transformation for SMEs and corporate departments.
+                  Expert consultancy for small-to-medium businesses. AI automation, custom websites, platform migrations, and ERP solutions.
                 </motion.p>
               </div>
 

@@ -9,30 +9,30 @@ import {
 } from '@heroicons/react/24/outline'
 
 const targetClients = [
-  'Offshore logistics companies',
-  'Construction & energy sectors',
-  'Project management-heavy industries',
-  'SMEs lacking automation expertise',
-  'Corporate departments seeking efficiency',
-  'Operations-heavy businesses'
+  'Small-to-medium businesses',
+  'Companies needing digital transformation',
+  'Businesses migrating from legacy platforms',
+  'Organizations seeking AI integration',
+  'Teams requiring custom solutions',
+  'Growing companies across diverse industries'
 ]
 
 const approach = [
   {
-    title: 'Discovery & Analysis',
-    description: 'Deep dive into your current processes to identify automation opportunities and bottlenecks.'
+    title: 'Problem Definition',
+    description: 'Understanding your unique challenges before jumping to solutions.'
   },
   {
-    title: 'Custom Solution Design',
-    description: 'Tailored AI automation strategies using the right tools for your specific needs.'
+    title: 'Solution Design',
+    description: 'Crafting practical, scalable approaches tailored to your business context.'
   },
   {
-    title: 'Implementation & Integration',
-    description: 'Seamless deployment with your existing systems and comprehensive training.'
+    title: 'Implementation',
+    description: 'Hands-on development and deployment with clear communication.'
   },
   {
-    title: 'Ongoing Optimization',
-    description: 'Continuous monitoring and improvement to ensure maximum ROI and efficiency gains.'
+    title: 'Support & Growth',
+    description: 'Ongoing guidance to ensure solutions evolve with your business.'
   }
 ]
 
@@ -71,19 +71,20 @@ export default function About() {
               </motion.div>
               
               <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
-                Your Trusted Partner in{' '}
-                <span className="text-gradient">AI Automation</span>
+                Your Partner in{' '}
+                <span className="text-gradient">Digital Transformation</span>
               </h2>
               
               <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                Bonneval Solutions is a boutique AI automation consultancy specializing in transforming 
-                business operations through intelligent automation and process optimization. We focus on 
-                delivering practical, scalable solutions that drive real business value.
+                Bonneval Solutions brings a unique approach to digital consulting, combining technical expertise 
+                with problem-defining skills developed across diverse industries. We specialize in helping 
+                small-to-medium businesses navigate AI integration, web development, and digital transformation.
               </p>
               
               <p className="text-lg text-gray-600 leading-relaxed">
-                Our expertise spans from workflow automation to custom AI solutions, helping SMEs and 
-                corporate departments streamline operations, reduce costs, and boost efficiency.
+                Our methodology emphasizes understanding your specific challenges first—a skill honed through 
+                experience in complex environments. We deliver practical, scalable solutions tailored to your 
+                business context, not one-size-fits-all templates.
               </p>
             </div>
 
@@ -177,16 +178,16 @@ export default function About() {
               className="bg-white rounded-xl p-6 shadow-sm border border-gray-100"
             >
               <h4 className="text-lg font-semibold text-gray-900 mb-2">
-                Ready to Get Started?
+                Meet the Founder
               </h4>
               <p className="text-gray-600 mb-4">
-                Let's discuss how we can transform your business operations with AI automation.
+                Learn more about the experience and approach behind Bonneval Solutions.
               </p>
               <a
-                href="#contact"
-                className="btn-primary w-full text-center"
+                href="/founder"
+                className="btn-secondary w-full text-center"
               >
-                Schedule a Free Consultation
+                Founder Story
               </a>
             </motion.div>
           </motion.div>

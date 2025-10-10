@@ -1,8 +1,19 @@
+/**
+ * TOOLS SUBDOMAIN HEADER COMPONENT
+ * 
+ * Header for tools.bonnevalsolutions.com
+ * - Simplified navigation focused on tools
+ * - "Back to Main Site" link for easy navigation
+ * - Tools dropdown and mobile menu
+ * - Uses centralized company configuration
+ */
+
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { Bars3Icon, XMarkIcon, ChevronDownIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, XMarkIcon, ChevronDownIcon, ArrowLeftIcon } from '@heroicons/react/24/outline'
 import { getCompanyInfo } from '@/config/company'
+import { getMainSiteUrl } from '@/utils/routing'
 
 const tools = [
   { name: 'Memorizer', href: '/memorizer' },
@@ -14,47 +25,19 @@ const tools = [
 export default function ToolsHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [toolsDropdownOpen, setToolsDropdownOpen] = useState(false)
-  const [toolsDropdownVisible, setToolsDropdownVisible] = useState(false)
-  const [mobileToolsOpen, setMobileToolsOpen] = useState(false)
-  const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
+  // Simplified hover handlers - no complex timing logic needed
   const handleMouseEnter = () => {
-    if (dropdownTimeoutRef.current) {
-      clearTimeout(dropdownTimeoutRef.current)
-    }
     setToolsDropdownOpen(true)
-    setToolsDropdownVisible(true)
   }
 
   const handleMouseLeave = () => {
-    dropdownTimeoutRef.current = setTimeout(() => {
-      setToolsDropdownVisible(false)
-      setTimeout(() => setToolsDropdownOpen(false), 200)
-    }, 100)
+    setToolsDropdownOpen(false)
   }
 
   const handleMobileMenuToggle = () => {
     setMobileMenuOpen(!mobileMenuOpen)
   }
-
-  const handleMobileToolsToggle = () => {
-    setMobileToolsOpen(!mobileToolsOpen)
-  }
-
-  // Add vanilla JavaScript event listener as a fallback
-  useEffect(() => {
-    const mobileMenuButton = document.getElementById('mobile-menu-button')
-    if (mobileMenuButton) {
-      const handleClick = () => {
-        setMobileMenuOpen(!mobileMenuOpen)
-      }
-      mobileMenuButton.addEventListener('click', handleClick)
-      
-      return () => {
-        mobileMenuButton.removeEventListener('click', handleClick)
-      }
-    }
-  }, [mobileMenuOpen])
 
   // Disable body scroll when mobile menu is open
   useEffect(() => {
@@ -99,8 +82,12 @@ export default function ToolsHeader() {
         
         {/* Desktop navigation */}
         <div className="hidden lg:flex lg:gap-x-12">
-          <a href="/" className="text-sm font-semibold leading-6 text-gray-900 hover:text-primary-600 transition-colors duration-200">
-            Home
+          <a 
+            href={getMainSiteUrl('/')} 
+            className="text-sm font-semibold leading-6 text-gray-900 hover:text-primary-600 transition-colors duration-200 inline-flex items-center"
+          >
+            <ArrowLeftIcon className="w-4 h-4 mr-2" />
+            Main Site
           </a>
         </div>
         
@@ -136,11 +123,7 @@ export default function ToolsHeader() {
             
             {toolsDropdownOpen && (
               <div 
-                className={`absolute right-0 mt-0 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 transition-all duration-200 ease-in-out ${
-                  toolsDropdownVisible 
-                    ? 'opacity-100 translate-y-0' 
-                    : 'opacity-0 translate-y-2 pointer-events-none'
-                }`}
+                className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 transition-all duration-200 ease-in-out opacity-100"
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
               >

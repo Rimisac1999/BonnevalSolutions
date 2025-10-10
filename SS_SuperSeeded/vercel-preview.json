@@ -1,4 +1,7 @@
 {
+  "comment": "OLD PREVIEW ENVIRONMENT CONFIGURATION - SUPERSEDED",
+  "note": "This configuration was used when we had separate preview branches with preview.* subdomains",
+  "archived": "October 2025",
   "buildCommand": "npm run build",
   "outputDirectory": ".next",
   "framework": "nextjs",
@@ -20,6 +23,28 @@
           "value": "tools.bonnevalsolutions.com"
         }
       ]
+    },
+    {
+      "comment": "OLD PREVIEW LOGIC - No longer needed",
+      "source": "/(.*)",
+      "destination": "/tools-domain/$1",
+      "has": [
+        {
+          "type": "host",
+          "value": "preview-tools.bonnevalsolutions.com"
+        }
+      ]
+    },
+    {
+      "comment": "OLD PREVIEW LOGIC - No longer needed",
+      "source": "/(.*)",
+      "destination": "/$1",
+      "has": [
+        {
+          "type": "host",
+          "value": "preview.bonnevalsolutions.com"
+        }
+      ]
     }
   ],
   "headers": [
@@ -38,3 +63,4 @@
     }
   ]
 }
+

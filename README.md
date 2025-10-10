@@ -1,6 +1,6 @@
 # Bonneval Solutions Website
 
-A modern, professional website for Bonneval Solutions - AI Automation & Process Optimization Consultancy, featuring a comprehensive tools platform, subdomain architecture, and centralized company configuration system.
+A modern, professional website for Bonneval Solutions - AI Solutions, Web Development & Digital Transformation consultancy. Features a clean architecture with tools subdomain, centralized configuration, and portfolio showcase.
 
 ## 🚀 Features
 
@@ -23,9 +23,9 @@ A modern, professional website for Bonneval Solutions - AI Automation & Process 
 ### **Company Configuration System**
 - **Centralized Data**: All company information in one place (`config/company.ts`)
 - **Easy Maintenance**: Update company info once, changes everywhere
-- **Environment Switching**: Simple switch between "Preview" and "Production" branding
+- **Subdomain Branding**: Automatic branding adjustment for tools subdomain
 - **Type Safety**: Full TypeScript support
-- **Environment Variables**: Support for sensitive data protection
+- **Social Media Integration**: Centralized social media links
 
 ### **Mobile Navigation**
 - **Fixed Mobile Menu**: Full screen coverage on mobile devices
@@ -33,11 +33,16 @@ A modern, professional website for Bonneval Solutions - AI Automation & Process 
 - **Touch Friendly**: Optimized for mobile interaction
 - **Consistent Experience**: Same behavior across main site and tools
 
+### **Content Pages**
+- **Founder Page**: Dedicated page showcasing founder's background and approach
+- **Portfolio Page**: Full website portfolio with live and upcoming projects
+- **Responsive Layouts**: All pages optimized for mobile and desktop
+
 ### **Integration Features**
 - **Voiceflow Chat Widget**: AI chat integration on main page
 - **External Portals**: Links to intranet and client portals
-- **Smooth Navigation**: Hover effects and animations
-- **Mobile-First**: Responsive design for all screen sizes
+- **Smooth Navigation**: Fixed dropdown hover issues, improved UX
+- **Social Media**: Integrated social media links (LinkedIn, Twitter, Instagram, Facebook, Threads, GitHub)
 
 ## 🏗️ Project Structure
 
@@ -46,35 +51,43 @@ bonneval-solutions/
 ├── app/
 │   ├── globals.css                    # Global styles and Tailwind imports
 │   ├── layout.tsx                     # Root layout (uses company config)
-│   ├── page.tsx                       # Homepage
+│   ├── page.tsx                       # Homepage with portfolio section
+│   ├── founder/                       # 🆕 Founder page
+│   │   └── page.tsx
+│   ├── portfolio/                     # 🆕 Portfolio showcase page
+│   │   └── page.tsx
 │   ├── client/                        # Client login page
 │   ├── intranet/                      # Intranet login page
-│   └── tools-domain/                  # 🆕 Tools subdomain structure
+│   └── tools-domain/                  # Tools subdomain structure
 │       ├── layout.tsx                 # Tools layout (uses company config)
 │       ├── page.tsx                   # Tools landing page
 │       ├── memorizer/page.tsx         # Memorizer tool page
 │       └── components/                # Tools-specific components
-│           ├── ToolsHeader.tsx        # Tools header (uses company config)
-│           └── ToolsFooter.tsx        # Tools footer (uses company config)
+│           ├── ToolsHeader.tsx        # Tools header with back to main site link
+│           └── ToolsFooter.tsx        # Tools footer
 ├── components/
-│   ├── Header.tsx                     # Main site header (uses company config)
-│   ├── Hero.tsx                       # Hero section
-│   ├── Services.tsx                   # Services showcase
-│   ├── About.tsx                      # About section
+│   ├── Header.tsx                     # Main site header (fixed dropdown)
+│   ├── Hero.tsx                       # Hero section (updated branding)
+│   ├── Services.tsx                   # Services showcase (4 core services)
+│   ├── Portfolio.tsx                  # 🆕 Portfolio mini-showcase component
+│   ├── About.tsx                      # About section (founder focus)
 │   ├── Contact.tsx                    # Contact form
-│   ├── Footer.tsx                     # Main site footer
+│   ├── Footer.tsx                     # Main site footer (social media icons)
 │   ├── VoiceflowWidget.tsx            # AI chat widget
 │   └── tools/                         # Shared tool components
 │       └── MemorizerTool.tsx          # Memorizer tool component
 ├── config/
-│   └── company.ts                     # 🆕 Centralized company configuration
-├── .github/
-│   └── workflows/
-│       └── pre-production-deploy.yml  # 🆕 GitHub Actions for Pre-Production Testing
+│   └── company.ts                     # Centralized company configuration (master file)
+├── utils/
+│   └── routing.ts                     # Simplified routing utilities
+├── SS_SuperSeeded/                    # 🆕 Archived old code
+│   ├── PREVIEW_WORKFLOW.md            # Documentation of old preview logic
+│   └── vercel-preview.json            # Old Vercel preview config
 ├── public/                            # Static assets
-├── vercel.json                        # 🆕 Vercel configuration for subdomains
+├── vercel.json                        # Simplified Vercel configuration
+├── middleware.ts                      # Subdomain routing middleware
 ├── tailwind.config.js                 # Tailwind configuration
-└── SUBDOMAIN_SETUP.md                 # 🆕 Subdomain setup guide
+└── README.md                          # This file
 ```
 
 ## 🛠️ Tech Stack
@@ -140,43 +153,53 @@ TTL: 4 h
 
 ## 🚀 Deployment
 
-### **Pre-Production Testing Environment**
-- **Branch**: `test-cursor-agent`
-- **Environment**: "Pre-Production-Testing" in GitHub
-- **Automatic Deployment**: GitHub Actions workflow on push
-- **Preview Branding**: "Preview Bonneval Solutions" for testing
-
 ### **Production Deployment**
+- **Platform**: Vercel
 - **Branch**: `main`
-- **Environment**: Production in Vercel
-- **Production Branding**: "Bonneval Solutions" (from company config)
+- **Automatic Deployment**: Push to main triggers deployment
+- **Environment Variables**: Set in Vercel dashboard
 
-### **GitHub Actions Workflow**
-- **Trigger**: Push to `test-cursor-agent` branch
-- **Environment**: Pre-Production-Testing
-- **Actions**: Build, test, deploy to Vercel
-- **Secrets Required**: `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`
+### **Vercel Configuration**
+The `vercel.json` file handles:
+- Tools subdomain routing
+- Security headers
+- Build optimization
+
+### **DNS Configuration**
+- **Main Site**: `bonnevalsolutions.com` → Vercel
+- **Tools Subdomain**: `tools.bonnevalsolutions.com` → Vercel (CNAME)
+- **Intranet**: `intranet.bonnevalsolutions.com` → OVH Private Server (future)
+- **Client Portal**: `client.bonnevalsolutions.com` → OVH Private Server (future)
 
 ## 🔧 Configuration
 
-### **Company Information**
-All company information is centralized in `config/company.ts`:
+### **Company Information - Master Configuration File**
+All company information is centralized in `config/company.ts`. This is the single source of truth for:
+- Company branding and messaging
+- Contact information
+- Services and technologies
+- Social media links
+- Legal information
 
 ```typescript
 export const companyConfig = {
-  name: 'Preview Bonneval Solutions',        // Change this for production
-  fullName: 'Preview Bonneval Solutions SASU',
-  contact: { /* ... */ },
-  business: { /* ... */ },
-  legal: { /* ... */ },
-  branding: { /* ... */ }
+  name: isToolsSubdomain() ? 'Tools Bonneval Solutions' : 'Bonneval Solutions',
+  fullName: 'Bonneval Solutions SASU',
+  contact: { /* email, phone, location */ },
+  business: { /* services, technologies, target clients */ },
+  social: { /* LinkedIn, Twitter, Instagram, Facebook, Threads, GitHub */ },
+  legal: { /* copyright, policies */ },
+  branding: { /* tagline, description, mission, vision */ }
 }
 ```
 
-### **Switching Between Environments**
-1. **Preview Mode**: `name: 'Preview Bonneval Solutions'`
-2. **Production Mode**: `name: 'Bonneval Solutions'`
-3. **Single Change**: Update one line in config file
+### **Subdomain Branding**
+The configuration automatically adjusts branding based on the current subdomain:
+- **Main Site** (`bonnevalsolutions.com`): Shows "Bonneval Solutions"
+- **Tools Subdomain** (`tools.bonnevalsolutions.com`): Shows "Tools Bonneval Solutions"
+- **Localhost**: Handles both contexts appropriately
+
+This eliminates the need for separate preview/production branches while providing contextual branding.
 
 ## 📱 Mobile Navigation
 
@@ -192,71 +215,79 @@ export const companyConfig = {
 - **Touch Friendly**: Optimized for mobile interaction
 - **Consistent Behavior**: Same experience across all pages
 
-## 📋 To-Do List
+## 📋 Recent Updates
 
-### **🔄 In Progress**
-- [x] ~~Setup Pre-Production Testing environment~~
-- [x] ~~Fix mobile navigation issues~~
-- [x] ~~Implement tools subdomain architecture~~
-- [x] ~~Centralize company configuration~~
-- [x] ~~Setup GitHub Actions workflow~~
+### **✅ Completed**
+- [x] Simplified architecture by removing preview branch complexity
+- [x] Fixed desktop header dropdown hover issues
+- [x] Repurposed environment detection for tools subdomain branding
+- [x] Updated branding to focus on AI, Web Dev, and ERP solutions
+- [x] Created founder page with Africa experience focus
+- [x] Built portfolio showcase (mini and full page)
+- [x] Added social media integration (6 platforms)
+- [x] Improved code documentation and comments
+- [x] Reorganized services to 4 core offerings
+- [x] Updated all component content for new branding
 
 ### **⏳ Next Steps**
-- [ ] **Intranet Platform Setup**
-  - [ ] Configure OVH private server
-  - [ ] Setup Docker containers for ERP/CRM
-  - [ ] Configure `intranet.bonnevalsolutions.com` DNS
-  - [ ] Implement authentication system
-  - [ ] Setup internal tools and workflows
+- [ ] Add real project screenshots to portfolio
+- [ ] Populate founder page with actual content and photo
+- [ ] Setup analytics and monitoring
+- [ ] Implement contact form backend
+- [ ] Add more tools to tools subdomain
+- [ ] Create case studies for portfolio projects
 
-- [ ] **Client Portal Setup**
-  - [ ] Configure OVH private server
-  - [ ] Setup Docker containers for client portal
-  - [ ] Configure `client.bonnevalsolutions.com` DNS
-  - [ ] Implement client authentication
-  - [ ] Setup client-specific tools and dashboards
+### **🔮 Future Infrastructure**
+- [ ] **Intranet Platform** (`intranet.bonnevalsolutions.com`)
+  - Configure OVH private server
+  - Setup Docker containers for internal tools
+  - Implement authentication system
 
-- [ ] **Production Deployment**
-  - [ ] Update company config to production values
-  - [ ] Merge `test-cursor-agent` to `main`
-  - [ ] Configure production environment in Vercel
-  - [ ] Setup production monitoring and analytics
-
-### **🔮 Future Enhancements**
-- [ ] Add more tools to the tools platform
-- [ ] Implement advanced analytics and reporting
-- [ ] Setup automated testing pipeline
-- [ ] Add performance monitoring
-- [ ] Implement A/B testing capabilities
+- [ ] **Client Portal** (`client.bonnevalsolutions.com`)
+  - Configure OVH private server
+  - Setup client-specific tools and dashboards
+  - Implement secure client authentication
 
 ## 📝 Changelog
 
-### **Version 2.0.0** - Major Architecture Update (Current)
-*Released: August 2024*
+### **Version 3.0.0** - Website Modernization & Rebranding (Current)
+*Released: October 2025*
 
-#### **🚀 New Features**
-- **Tools Subdomain Architecture**: Complete separation of tools platform
-- **Pre-Production Testing Environment**: Dedicated testing environment with GitHub Actions
-- **Centralized Company Configuration**: Single source of truth for all company information
-- **Mobile Navigation Fixes**: Full screen mobile menu with proper scrolling
-
-#### **🏗️ Architecture Changes**
-- **New Directory Structure**: `app/tools-domain/` for tools subdomain
-- **Component Reorganization**: Tools components moved to appropriate locations
-- **Routing Configuration**: Next.js rewrites for subdomain handling
-- **Vercel Configuration**: Subdomain support and deployment optimization
+#### **🎨 Branding & Content**
+- **New Service Focus**: AI Solutions, Web Development, Website Migration, ERP Solutions
+- **Founder Page**: New dedicated page showcasing background and approach
+- **Portfolio Showcase**: Mini-showcase on homepage + full portfolio page
+- **Updated Copy**: All content refocused on new branding and target audience
+- **Founder Story**: Africa experience and problem-defining methodology highlighted
 
 #### **🔧 Technical Improvements**
-- **GitHub Actions Workflow**: Automated deployment to Pre-Production Testing
-- **Mobile Menu Overhaul**: Fixed positioning, scrolling, and user experience
-- **Company Config Integration**: All components now use centralized configuration
-- **TypeScript Enhancements**: Better type safety and code organization
+- **Fixed Header Dropdown**: Simplified state management, eliminated timing issues
+- **Subdomain Branding**: Repurposed environment detection for tools subdomain
+- **Archived Preview Logic**: Moved old preview/test branch code to `SS_SuperSeeded/`
+- **Improved Routing**: Simplified `utils/routing.ts`, removed unnecessary complexity
+- **Added Documentation**: Comprehensive comments in key files
 
-#### **📱 User Experience**
-- **Mobile Navigation**: Fixed hamburger menu issues on mobile devices
-- **Consistent Branding**: Unified company information across all pages
-- **Better Performance**: Optimized routing and component loading
-- **Professional Tools Interface**: Dedicated tools platform with proper navigation
+#### **🎯 UI/UX Enhancements**
+- **Services Reduced**: From 6 to 4 core services with clearer focus
+- **Social Media Integration**: 6 platforms (LinkedIn, Twitter, Instagram, Facebook, Threads, GitHub)
+- **Footer Redesign**: Removed Industries section, added social icons
+- **Navigation Polish**: "Back to Main Site" link in tools header
+- **Responsive Design**: All new pages fully responsive
+
+#### **📚 Documentation**
+- **Updated README**: Removed outdated preview environment information
+- **SS_SuperSeeded**: Archived old code with documentation
+- **Code Comments**: Added comments to all major components
+- **Master Config**: Centralized configuration documentation
+
+### **Version 2.0.0** - Major Architecture Update
+*Released: August 2024*
+
+#### **Features**
+- Tools Subdomain Architecture
+- Centralized Company Configuration
+- Mobile Navigation Fixes
+- Company Config Integration
 
 ### **Version 1.0.0** - Initial Release
 *Released: July 2024*
@@ -275,7 +306,9 @@ export const companyConfig = {
 
 ---
 
-**Last Updated**: August 2024  
-**Current Version**: 2.0.0  
-**Status**: Pre-Production Testing Phase  
-**Next Milestone**: Intranet & Client Portal Setup 
+**Last Updated**: October 2025  
+**Current Version**: 3.0.0  
+**Status**: Production Ready  
+**Next Steps**: Add real content (photos, screenshots), implement analytics
+
+For contribution guidelines, see `CONTRIBUTING.md` 

@@ -1,32 +1,40 @@
-// Environment detection
-const commitRef = process.env.VERCEL_GIT_COMMIT_REF
-const isMainBranch = commitRef ? commitRef === 'main' : true
-const isPreview = !isMainBranch
+/**
+ * MASTER COMPANY CONFIGURATION
+ * 
+ * This is the single source of truth for all company information across the website.
+ * Changes made here will automatically propagate to all pages and components.
+ * 
+ * Environment Detection:
+ * - Detects if user is on tools subdomain to show appropriate branding
+ * - Main site: "Bonneval Solutions"
+ * - Tools subdomain: "Tools Bonneval Solutions"
+ */
 
-// Domain routing based on environment
+// Subdomain detection - determines if we're on tools subdomain
+const isToolsSubdomain = () => {
+  if (typeof window !== 'undefined') {
+    return window.location.hostname.startsWith('tools.')
+  }
+  return false
+}
+
+// Domain routing configuration
 export const getDomainConfig = () => {
-  if (isMainBranch) {
-    return {
-      main: 'bonnevalsolutions.com',
-      tools: 'tools.bonnevalsolutions.com',
-      isProduction: true
-    }
-  } else {
-    return {
-      main: 'preview.bonnevalsolutions.com',
-      tools: 'preview-tools.bonnevalsolutions.com',
-      isProduction: false
-    }
+  return {
+    main: 'bonnevalsolutions.com',
+    tools: 'tools.bonnevalsolutions.com',
+    intranet: 'intranet.bonnevalsolutions.com',
+    client: 'client.bonnevalsolutions.com',
   }
 }
 
 export const companyConfig = {
-  // Basic Company Information
-  name: isPreview ? 'Preview Bonneval Solutions' : 'Bonneval Solutions',
-  fullName: isPreview ? 'Preview Bonneval Solutions SASU' : 'Bonneval Solutions SASU',
+  // Basic Company Information - dynamically adjusts based on subdomain
+  name: isToolsSubdomain() ? 'Tools Bonneval Solutions' : 'Bonneval Solutions',
+  fullName: 'Bonneval Solutions SASU',
   legalForm: 'EI (Entrepreuneur Individuel)',
   founded: '2024',
-  industry: 'AI Automation & Process Optimization Consultancy',
+  industry: 'AI Solutions, Web Development & Digital Transformation',
   
   // Contact Information
   contact: {
@@ -51,12 +59,10 @@ export const companyConfig = {
       'Operations-heavy businesses'
     ],
     services: [
-      'Workflow Automation',
-      'AI Agents & Chatbots',
-      'Process Digitization',
-      'Data Analytics & Reporting',
-      'System Integration',
-      'Custom AI Solutions'
+      'AI Automation (outreach, social media, voice & text agents)',
+      'Website Development (custom builds, modern frameworks)',
+      'Website Migration (WordPress, Shopify, etc. to modern platforms)',
+      'Small-scale ERP Solutions (development, advice, implementation)'
     ],
     technologies: [
       'Voiceflow & ChatGPT',
@@ -71,8 +77,11 @@ export const companyConfig = {
   // Social Media & Online Presence
   social: {
     linkedin: 'https://linkedin.com/company/bonnevalsolutions',
-    twitter: 'Coming soon',
-    github: 'coming Soon',
+    twitter: 'https://twitter.com/bonnevalsolutions',
+    instagram: 'https://instagram.com/bonnevalsolutions',
+    facebook: 'https://facebook.com/bonnevalsolutions',
+    threads: 'https://threads.net/@bonnevalsolutions',
+    github: 'https://github.com/bonnevalsolutions',
     website: 'https://bonnevalsolutions.com'
   },
   
@@ -80,23 +89,24 @@ export const companyConfig = {
   external: {
     intranet: 'https://intranet.bonnevalsolutions.com',
     client: 'https://client.bonnevalsolutions.com',
-    tools: `https://${getDomainConfig().tools}`
+    tools: `https://${getDomainConfig().tools}`,
+    calendly: 'https://calendly.com/your-username/consultation', // TODO: Replace with your actual Calendly link
   },
   
   // Legal & Compliance
   legal: {
-    copyright: isPreview ? '© 2024 Preview Bonneval Solutions. All rights reserved.' : '© 2024 Bonneval Solutions. All rights reserved.',
-    privacyPolicy: '/PrivacyPolicy',
-    termsOfService: '/TermsOfService',
-    cookiePolicy: '/CookiePolicy'
+    copyright: '© 2024 Bonneval Solutions. All rights reserved.',
+    privacyPolicy: '/privacy-policy',
+    termsOfService: '/terms-of-service',
+    cookiePolicy: '/cookie-policy'
   },
   
   // Branding & Messaging
   branding: {
-    tagline: 'Transform Your Business with AI Automation',
-    description: 'Expert AI automation and process optimization consultancy for SMEs and corporate departments. Specializing in workflow automation, AI agents, and custom digital solutions.',
-    mission: 'To democratize AI automation for businesses of all sizes, making complex processes simple and efficient.',
-    vision: isPreview ? 'Position Preview Bonneval Solutions as a trusted boutique AI integration partner.' : 'Position Bonneval Solutions as a trusted boutique AI integration partner.'
+    tagline: 'AI Solutions, Web Development & Digital Transformation',
+    description: 'Expert consultancy specializing in AI automation, custom website development, platform migration, and small-scale ERP solutions for small-to-medium businesses across diverse industries.',
+    mission: 'To empower SMEs with cutting-edge digital solutions, combining problem-defining expertise with practical implementation.',
+    vision: 'Position Bonneval Solutions as a trusted partner for businesses seeking AI integration, modern web presence, and efficient digital systems.'
   }
 }
 

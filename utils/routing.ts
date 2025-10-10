@@ -1,6 +1,14 @@
-// Utility functions for dynamic routing based on environment
+/**
+ * ROUTING UTILITIES
+ * 
+ * Utilities for cross-site navigation between main site and tools subdomain.
+ * Handles localhost development and production environments seamlessly.
+ */
 
-// Get the current domain configuration
+/**
+ * Get the current domain configuration based on hostname
+ * Detects: localhost, main site, or tools subdomain
+ */
 export const getCurrentDomain = () => {
   // Check if we're in the browser
   if (typeof window !== 'undefined') {
@@ -12,95 +20,100 @@ export const getCurrentDomain = () => {
       return {
         main: `localhost:${port || '3000'}`,
         tools: `localhost:${port || '3000'}/tools-domain`,
+        intranet: 'intranet.bonnevalsolutions.com',
+        client: 'client.bonnevalsolutions.com',
         isProduction: false,
-        isLocalhost: true
+        isLocalhost: true,
+        isToolsSubdomain: false
       }
     }
     
-    if (hostname === 'preview.bonnevalsolutions.com') {
-      return {
-        main: 'preview.bonnevalsolutions.com',
-        tools: 'preview-tools.bonnevalsolutions.com',
-        isProduction: false,
-        isLocalhost: false
-      }
-    } else if (hostname === 'preview-tools.bonnevalsolutions.com') {
-      return {
-        main: 'preview.bonnevalsolutions.com',
-        tools: 'preview-tools.bonnevalsolutions.com',
-        isProduction: false,
-        isLocalhost: false
-      }
-    } else if (hostname === 'tools.bonnevalsolutions.com') {
+    // Handle tools subdomain
+    if (hostname === 'tools.bonnevalsolutions.com') {
       return {
         main: 'bonnevalsolutions.com',
         tools: 'tools.bonnevalsolutions.com',
+        intranet: 'intranet.bonnevalsolutions.com',
+        client: 'client.bonnevalsolutions.com',
         isProduction: true,
-        isLocalhost: false
+        isLocalhost: false,
+        isToolsSubdomain: true
       }
-    } else if (hostname === 'bonnevalsolutions.com' || hostname === 'www.bonnevalsolutions.com') {
+    }
+    
+    // Handle main site (including www)
+    if (hostname === 'bonnevalsolutions.com' || hostname === 'www.bonnevalsolutions.com') {
       return {
         main: 'bonnevalsolutions.com',
         tools: 'tools.bonnevalsolutions.com',
+        intranet: 'intranet.bonnevalsolutions.com',
+        client: 'client.bonnevalsolutions.com',
         isProduction: true,
-        isLocalhost: false
+        isLocalhost: false,
+        isToolsSubdomain: false
       }
     }
   }
   
-  // Fallback for server-side rendering
-  const commitRef = process.env.VERCEL_GIT_COMMIT_REF
-  const isMainBranch = commitRef ? commitRef === 'main' : false
-  const isPreview = !isMainBranch || process.env.NODE_ENV === 'development'
-  
-  if (isPreview) {
-    return {
-      main: 'preview.bonnevalsolutions.com',
-      tools: 'preview-tools.bonnevalsolutions.com',
-      isProduction: false,
-      isLocalhost: false
-    }
-  } else {
-    return {
-      main: 'bonnevalsolutions.com',
-      tools: 'tools.bonnevalsolutions.com',
-      isProduction: true,
-      isLocalhost: false
-    }
+  // Fallback for server-side rendering - default to production
+  return {
+    main: 'bonnevalsolutions.com',
+    tools: 'tools.bonnevalsolutions.com',
+    intranet: 'intranet.bonnevalsolutions.com',
+    client: 'client.bonnevalsolutions.com',
+    isProduction: true,
+    isLocalhost: false,
+    isToolsSubdomain: false
   }
 }
 
-// Generate tool URLs based on current environment
+/**
+ * Generate tool URLs for navigation to tools subdomain
+ * @param toolPath - Path to the tool (e.g., '/memorizer')
+ * @returns Full URL to the tool
+ */
 export const getToolUrl = (toolPath: string) => {
   const domain = getCurrentDomain()
   
-  // Handle localhost differently - use relative paths
+  // Handle localhost - use relative paths
   if (domain.isLocalhost) {
     return `/tools-domain${toolPath}`
   }
   
+  // Production - use full subdomain URL
   return `https://${domain.tools}${toolPath}`
 }
 
-// Generate main site URLs based on current environment
+/**
+ * Generate main site URLs for navigation from tools to main site
+ * @param path - Path on main site (e.g., '/portfolio', '#contact')
+ * @returns Full URL to main site
+ */
 export const getMainSiteUrl = (path: string = '') => {
   const domain = getCurrentDomain()
   
-  // Handle localhost differently - use relative paths
+  // Handle localhost - use relative paths
   if (domain.isLocalhost) {
     return path.startsWith('/') ? path : `/${path}`
   }
   
+  // Production - use full domain URL
   return `https://${domain.main}${path}`
 }
 
-// Check if current environment is preview
-export const isPreviewEnvironment = () => {
+/**
+ * Check if currently on tools subdomain
+ * @returns true if on tools.bonnevalsolutions.com
+ */
+export const isToolsSubdomain = () => {
   const domain = getCurrentDomain()
-  return !domain.isProduction
+  return domain.isToolsSubdomain
 }
 
-// Check if current environment is localhost
+/**
+ * Check if running on localhost
+ * @returns true if on localhost or 127.0.0.1
+ */
 export const isLocalhostEnvironment = () => {
   const domain = getCurrentDomain()
   return domain.isLocalhost

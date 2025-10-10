@@ -1,4 +1,23 @@
-  'use client'
+/**
+ * MAIN SITE HEADER COMPONENT
+ * 
+ * Features:
+ * - Responsive navigation with mobile menu
+ * - Tools dropdown with hover functionality
+ * - Links to intranet and client portals
+ * - Uses centralized company configuration
+ * 
+ * Mobile Menu:
+ * - Full-screen overlay with proper scroll locking
+ * - Portal rendering to prevent z-index issues
+ * - Smooth animations
+ * 
+ * Desktop Dropdown:
+ * - Simple hover state management
+ * - Proper spacing to prevent gap issues
+ */
+
+'use client'
 
 import { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
@@ -23,17 +42,14 @@ const tools = [
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [toolsDropdownOpen, setToolsDropdownOpen] = useState(false)
-  const [toolsDropdownVisible, setToolsDropdownVisible] = useState(false)
 
-  // Hover handlers (desktop)
+  // Hover handlers for desktop dropdown - simplified state management
   const handleMouseEnter = () => {
     setToolsDropdownOpen(true)
-    setToolsDropdownVisible(true)
   }
+  
   const handleMouseLeave = () => {
-    setToolsDropdownVisible(false)
-    // small delay to allow fade-out
-    setTimeout(() => setToolsDropdownOpen(false), 200)
+    setToolsDropdownOpen(false)
   }
 
   // Scroll lock (works on iOS)
@@ -118,9 +134,7 @@ export default function Header() {
 
               {toolsDropdownOpen && (
                 <div
-                  className={`absolute right-0 mt-0 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 transition-all duration-200 ease-in-out ${
-                    toolsDropdownVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'
-                  }`}
+                  className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 transition-all duration-200 ease-in-out opacity-100"
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
                 >
