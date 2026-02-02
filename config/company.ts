@@ -30,7 +30,7 @@ export const companyConfig = {
   
   // Contact Information
   contact: {
-    email: 'casimir@bonnevalsolutions.com',
+    email: 'contact@bonnevalsolutions.com',
     phone: '+33 (0) 6 09 55 83 96',
     phoneFormatted: '+33 1 6 09 55 83 96',
     location: 'France (Remote & On-site)',
