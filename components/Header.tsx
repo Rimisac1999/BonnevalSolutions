@@ -1,17 +1,12 @@
-  'use client'
+'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
-import { Bars3Icon, XMarkIcon, ChevronDownIcon } from '@heroicons/react/24/outline'
-import { getCompanyInfo } from '@/config/company'
+import { List, X, CaretDown, GlobeSimple } from '@phosphor-icons/react'
+import { useLanguage } from '@/contexts/LanguageContext'
 import { getToolUrl } from '@/utils/routing'
-
-const navigation = [
-  { name: 'Home', href: '#home' },
-  { name: 'Services', href: '#services' },
-  { name: 'About', href: '#about' },
-  { name: 'Contact', href: '#contact' },
-]
+import { companyConfig } from '@/config/company'
+import Image from 'next/image'
 
 const tools = [
   { name: 'Memorizer', href: getToolUrl('/memorizer') },
@@ -21,213 +16,185 @@ const tools = [
 ]
 
 export default function Header() {
+  const { lang, setLang, t } = useLanguage()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [toolsDropdownOpen, setToolsDropdownOpen] = useState(false)
-  const [toolsDropdownVisible, setToolsDropdownVisible] = useState(false)
+  const [toolsOpen, setToolsOpen] = useState(false)
+  const [toolsVisible, setToolsVisible] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const toolsRef = useRef<HTMLDivElement>(null)
 
-  // Hover handlers (desktop)
-  const handleMouseEnter = () => {
-    setToolsDropdownOpen(true)
-    setToolsDropdownVisible(true)
-  }
-  const handleMouseLeave = () => {
-    setToolsDropdownVisible(false)
-    // small delay to allow fade-out
-    setTimeout(() => setToolsDropdownOpen(false), 200)
-  }
+  const navigation = [
+    { name: t('Home', 'Accueil'), href: '/#home' },
+    { name: t('Services', 'Services'), href: '/#services' },
+    { name: t('About', 'À propos'), href: '/#about' },
+    { name: t('Contact', 'Contact'), href: '/#contact' },
+  ]
 
-  // Scroll lock (works on iOS)
   useEffect(() => {
-    const html = document.documentElement
-    if (mobileMenuOpen) {
-      html.style.overflow = 'hidden'
-    } else {
-      html.style.overflow = ''
-    }
-    return () => {
-      html.style.overflow = ''
-    }
+    const onScroll = () => setScrolled(window.scrollY > 10)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    document.documentElement.style.overflow = mobileMenuOpen ? 'hidden' : ''
+    return () => { document.documentElement.style.overflow = '' }
   }, [mobileMenuOpen])
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (toolsRef.current && !toolsRef.current.contains(e.target as Node)) {
+        setToolsVisible(false)
+        setTimeout(() => setToolsOpen(false), 200)
+      }
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  const handleToolsEnter = () => { setToolsOpen(true); setToolsVisible(true) }
+  const handleToolsLeave = () => {
+    setToolsVisible(false)
+    setTimeout(() => setToolsOpen(false), 200)
+  }
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200">
-        <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
-          <div className="flex lg:flex-1">
-            <a href="#home" className="-m-1.5 p-1.5">
-              <span className="text-2xl font-bold text-gradient">{getCompanyInfo.name()}</span>
-            </a>
-          </div>
+      {/* Frosted glass navigation bar */}
+      <header className={`fixed inset-x-0 top-0 z-50 nav-glass transition-all duration-300 ${scrolled ? 'shadow-lg shadow-black/20' : ''}`}>
+        <nav className="container-brand flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8" aria-label="Global">
+          {/* Logo — 32px height per brand guidelines */}
+          <a href="/" className="flex items-center">
+            <Image
+              src={companyConfig.branding.logo}
+              alt="Bonneval Solutions"
+              width={120}
+              height={32}
+              priority
+              className="h-8 w-auto"
+            />
+          </a>
 
           {/* Mobile menu button */}
-          <div className="flex lg:hidden">
-            <button
-              type="button"
-              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 hover:bg-gray-100 transition-colors"
-              onClick={() => setMobileMenuOpen(true)}
-              aria-expanded={mobileMenuOpen}
-              aria-controls="mobile-menu"
-            >
-              <span className="sr-only">Open main menu</span>
-              <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-            </button>
-          </div>
+          <button
+            type="button"
+            className="lg:hidden -m-2.5 p-2.5 text-white/70 hover:text-white rounded-lg transition-colors"
+            onClick={() => setMobileMenuOpen(true)}
+            aria-expanded={mobileMenuOpen}
+          >
+            <span className="sr-only">Open menu</span>
+            <List size={24} />
+          </button>
 
           {/* Desktop navigation */}
-          <div className="hidden lg:flex lg:gap-x-12">
+          <div className="hidden lg:flex lg:items-center lg:gap-8">
             {navigation.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
-                className="text-sm font-semibold leading-6 text-gray-900 hover:text-primary-600 transition-colors duration-200"
+                className="text-sm font-medium text-white/70 hover:text-white transition-colors duration-150"
               >
                 {item.name}
               </a>
             ))}
-          </div>
 
-          {/* Desktop right */}
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center gap-4">
-            <a
-              href="https://intranet.bonnevalsolutions.com"
-              className="btn-secondary"
-              target="_blank"
-              rel="noopener noreferrer"
+            {/* Language toggle */}
+            <button
+              onClick={() => setLang(lang === 'en' ? 'fr' : 'en')}
+              className="flex items-center gap-1.5 text-sm font-medium text-white/70 hover:text-white transition-colors duration-150"
+              aria-label="Toggle language"
             >
+              <GlobeSimple size={16} />
+              {lang === 'en' ? 'FR' : 'EN'}
+            </button>
+
+            <a href="https://intranet.bonnevalsolutions.com" className="text-sm font-medium text-white/70 hover:text-white transition-colors duration-150" target="_blank" rel="noopener noreferrer">
               Intranet
             </a>
-            <a
-              href="https://client.bonnevalsolutions.com"
-              className="btn-secondary"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href="https://client.bonnevalsolutions.com" className="text-sm font-medium text-white/70 hover:text-white transition-colors duration-150" target="_blank" rel="noopener noreferrer">
               Client
             </a>
 
-            {/* Tools Dropdown */}
-            <div className="relative">
-              <button
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-                className="btn-primary inline-flex items-center"
-              >
+            {/* Tools dropdown — hidden for now */}
+            {/* <div ref={toolsRef} className="relative" onMouseEnter={handleToolsEnter} onMouseLeave={handleToolsLeave}>
+              <button className="btn-primary text-sm py-2 px-5 inline-flex items-center gap-1.5">
                 Tools
-                <ChevronDownIcon className="w-4 h-4 ml-2" />
+                <CaretDown size={14} className={`transition-transform ${toolsVisible ? 'rotate-180' : ''}`} />
               </button>
-
-              {toolsDropdownOpen && (
-                <div
-                  className={`absolute right-0 mt-0 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 transition-all duration-200 ease-in-out ${
-                    toolsDropdownVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'
-                  }`}
-                  onMouseEnter={handleMouseEnter}
-                  onMouseLeave={handleMouseLeave}
-                >
+              {toolsOpen && (
+                <div className={`absolute right-0 mt-2 w-44 bg-surface-2 rounded-card border border-white/10 py-1 transition-all duration-200 ${toolsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'}`}>
                   {tools.map((tool) => (
-                    <a
-                      key={tool.name}
-                      href={tool.href}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors"
-                    >
+                    <a key={tool.name} href={tool.href} className="block px-4 py-2.5 text-sm text-white/70 hover:bg-surface-3 hover:text-white transition-colors">
                       {tool.name}
                     </a>
                   ))}
                 </div>
               )}
-            </div>
+            </div> */}
           </div>
         </nav>
       </header>
 
-      {/* ----- Mobile menu rendered in a portal (outside the blurred header) ----- */}
-      {mobileMenuOpen &&
-        typeof window !== 'undefined' &&
-        createPortal(
-          <div id="mobile-menu" className="lg:hidden">
-            {/* Backdrop */}
-            <button
-              className="fixed inset-0 z-[9998] bg-black/50 backdrop-blur-sm"
-              onClick={() => setMobileMenuOpen(false)}
-              aria-label="Close menu"
-            />
+      {/* Mobile menu */}
+      {mobileMenuOpen && typeof window !== 'undefined' && createPortal(
+        <div className="lg:hidden">
+          <button className="fixed inset-0 z-[9998] bg-black/60 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} aria-label="Close menu" />
+          <div className="fixed inset-y-0 right-0 z-[9999] w-full max-w-sm bg-navy flex flex-col h-dvh shadow-2xl">
+            {/* Header */}
+            <div className="flex items-center justify-between p-5 border-b border-white/10">
+              <Image
+                src={companyConfig.branding.logo}
+                alt="Bonneval Solutions"
+                width={100}
+                height={28}
+                className="h-7 w-auto"
+              />
+              <button className="-m-2 p-2 text-white/70 hover:text-white rounded-lg" onClick={() => setMobileMenuOpen(false)}>
+                <X size={24} />
+              </button>
+            </div>
 
-            {/* Panel */}
-            <div className="fixed inset-0 z-[9999] bg-white flex flex-col h-dvh">
-              {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-white flex-shrink-0">
-                <span className="text-xl font-semibold text-gray-900">Menu</span>
-                <button
-                  type="button"
-                  className="-m-2.5 rounded-md p-2.5 text-gray-700 hover:bg-gray-100 transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <span className="sr-only">Close menu</span>
-                  <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
+            {/* Navigation links */}
+            <div className="flex-1 overflow-y-auto px-5 py-6">
+              <div className="space-y-1">
+                {navigation.map((item) => (
+                  <a key={item.name} href={item.href} className="block py-3 text-base font-medium text-white/80 hover:text-gold transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                    {item.name}
+                  </a>
+                ))}
               </div>
 
-              {/* Scrollable content */}
-              <div className="flex-1 overflow-y-auto px-6 py-8 [--tw-scrollbar-width:thin]">
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">Navigation</h3>
-                    <div className="space-y-3">
-                      {navigation.map((item) => (
-                        <a
-                          key={item.name}
-                          href={item.href}
-                          className="block text-lg font-medium text-gray-900 hover:text-primary-600 transition-colors py-2"
-                          onClick={() => setMobileMenuOpen(false)}
-                        >
-                          {item.name}
-                        </a>
-                      ))}
-                    </div>
-                  </div>
+              {/* Tools section — hidden for now */}
+              {/* <div className="mt-6 pt-6 border-t border-white/10">
+                <p className="text-xs font-semibold text-mid-gray uppercase tracking-wider mb-3">Tools</p>
+                {tools.map((tool) => (
+                  <a key={tool.name} href={tool.href} className="block py-2.5 text-base font-medium text-white/70 hover:text-gold transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                    {tool.name}
+                  </a>
+                ))}
+              </div> */}
 
-                  <div className="pt-6 border-t border-gray-200">
-                    <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">Tools</h3>
-                    <div className="space-y-3">
-                      {tools.map((tool) => (
-                        <a
-                          key={tool.name}
-                          href={tool.href}
-                          className="block text-lg font-medium text-gray-900 hover:text-primary-600 transition-colors py-2"
-                          onClick={() => setMobileMenuOpen(false)}
-                        >
-                          {tool.name}
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="pt-6 border-t border-gray-200 space-y-3">
-                    <a
-                      href="https://intranet.bonnevalsolutions.com"
-                      className="block text-lg font-medium text-gray-900 hover:text-primary-600 transition-colors py-2"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      Intranet
-                    </a>
-                    <a
-                      href="https://client.bonnevalsolutions.com"
-                      className="block text-lg font-medium text-gray-900 hover:text-primary-600 transition-colors py-2"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      Client Portal
-                    </a>
-                  </div>
-                </div>
+              <div className="mt-6 pt-6 border-t border-white/10 space-y-2">
+                <a href="https://intranet.bonnevalsolutions.com" className="block py-2.5 text-base font-medium text-white/70 hover:text-gold" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)}>
+                  Intranet
+                </a>
+                <a href="https://client.bonnevalsolutions.com" className="block py-2.5 text-base font-medium text-white/70 hover:text-gold" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)}>
+                  Client Portal
+                </a>
               </div>
             </div>
-          </div>,
-          document.body
-        )}
+
+            {/* Footer */}
+            <div className="p-5 border-t border-white/10">
+              <button onClick={() => setLang(lang === 'en' ? 'fr' : 'en')} className="flex items-center gap-2 text-sm font-medium text-white/60 hover:text-gold transition-colors">
+                <GlobeSimple size={20} />
+                {lang === 'en' ? 'Passer en Français' : 'Switch to English'}
+              </button>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
     </>
   )
 }

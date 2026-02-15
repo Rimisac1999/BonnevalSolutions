@@ -1,64 +1,82 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { 
-  CogIcon, 
-  ChatBubbleLeftRightIcon, 
-  DocumentTextIcon,
-  ChartBarIcon,
-  WrenchScrewdriverIcon,
-  ComputerDesktopIcon
-} from '@heroicons/react/24/outline'
-
-const services = [
-  {
-    name: 'Workflow Automation',
-    description: 'Streamline repetitive tasks and complex workflows using AI-powered automation tools. Perfect for logistics, engineering, and operations-heavy businesses.',
-    icon: CogIcon,
-    features: ['Process mapping & analysis', 'Custom automation workflows', 'Integration with existing systems', 'Performance monitoring'],
-    color: 'primary'
-  },
-  {
-    name: 'AI Agents & Chatbots',
-    description: 'Intelligent conversational agents using platforms like Voiceflow and ChatGPT. Automate customer service, internal communications, and data processing.',
-    icon: ChatBubbleLeftRightIcon,
-    features: ['Custom AI chatbots', 'Voiceflow integration', 'Multi-language support', 'Analytics & insights'],
-    color: 'secondary'
-  },
-  {
-    name: 'Process Digitization',
-    description: 'Transform paper-based and manual processes into efficient digital workflows. From procurement to maintenance planning and reporting.',
-    icon: DocumentTextIcon,
-    features: ['Digital form creation', 'Automated approvals', 'Document management', 'Compliance tracking'],
-    color: 'primary'
-  },
-  {
-    name: 'Data Analytics & Reporting',
-    description: 'Turn your data into actionable insights with automated reporting and analytics dashboards.',
-    icon: ChartBarIcon,
-    features: ['Custom dashboards', 'Automated reporting', 'KPI tracking', 'Predictive analytics'],
-    color: 'secondary'
-  },
-  {
-    name: 'System Integration',
-    description: 'Seamlessly connect your existing tools and platforms using n8n, Airtable, and other integration platforms.',
-    icon: WrenchScrewdriverIcon,
-    features: ['API integrations', 'Data synchronization', 'Custom connectors', 'Real-time updates'],
-    color: 'primary'
-  },
-  {
-    name: 'Custom AI Solutions',
-    description: 'Bespoke AI tools and applications tailored to your specific business needs and industry requirements.',
-    icon: ComputerDesktopIcon,
-    features: ['Custom AI models', 'Industry-specific solutions', 'Scalable architecture', 'Ongoing support'],
-    color: 'secondary'
-  }
-]
+import {
+  Globe,
+  Megaphone,
+  GearSix,
+  ChatCircleDots,
+  Phone,
+  Wrench,
+  MagnifyingGlass,
+} from '@phosphor-icons/react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function Services() {
+  const { t } = useLanguage()
+
+  const services = [
+    {
+      icon: Globe,
+      name: t('Websites & Web Apps', 'Sites Web & Applications'),
+      description: t(
+        'Modern, fast, responsive websites and web apps built to convert visitors into customers.',
+        'Sites web et applications modernes, rapides et responsives conçus pour convertir les visiteurs en clients.'
+      ),
+    },
+    {
+      icon: Megaphone,
+      name: t('Digital Marketing', 'Marketing Digital'),
+      description: t(
+        'Strategic digital marketing campaigns that grow your online presence and drive real results.',
+        'Campagnes de marketing digital stratégiques qui développent votre présence en ligne et génèrent des résultats concrets.'
+      ),
+    },
+    {
+      icon: GearSix,
+      name: t('Automation', 'Automatisation'),
+      description: t(
+        'Streamline repetitive tasks and complex workflows with intelligent automation tools.',
+        'Simplifiez les tâches répétitives et les workflows complexes avec des outils d\'automatisation intelligents.'
+      ),
+    },
+    {
+      icon: ChatCircleDots,
+      name: t('AI Agents & Chatbots', 'Agents IA & Chatbots'),
+      description: t(
+        'Custom AI agents and chatbots that handle customer service, lead generation, and internal processes.',
+        'Agents IA et chatbots personnalisés pour le service client, la génération de leads et les processus internes.'
+      ),
+    },
+    {
+      icon: Phone,
+      name: t('Voice Agents', 'Agents Vocaux'),
+      description: t(
+        'AI-powered voice agents for phone support, appointment booking, and automated outreach.',
+        'Agents vocaux alimentés par l\'IA pour le support téléphonique, la prise de rendez-vous et la prospection automatisée.'
+      ),
+    },
+    {
+      icon: Wrench,
+      name: t('Custom Solutions', 'Solutions Sur Mesure'),
+      description: t(
+        'Bespoke digital tools and integrations tailored to your specific business challenges.',
+        'Outils numériques et intégrations sur mesure adaptés à vos défis métier spécifiques.'
+      ),
+    },
+    {
+      icon: MagnifyingGlass,
+      name: t('Local SEO', 'SEO Local'),
+      description: t(
+        'Get found by local customers. Optimize your Google presence and dominate local search results.',
+        'Faites-vous trouver par les clients locaux. Optimisez votre présence Google et dominez les résultats de recherche locaux.'
+      ),
+    },
+  ]
+
   return (
-    <section id="services" className="section-padding bg-white">
-      <div className="container-max">
+    <section id="services" className="section-padding bg-navy">
+      <div className="container-brand">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -66,84 +84,36 @@ export default function Services() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            Our <span className="text-gradient">Services</span>
+          <h2 className="font-heading text-white mb-4">
+            {t('What We Build', 'Ce Que Nous Construisons')}
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Comprehensive AI automation and process optimization solutions designed to transform your business operations
+          <p className="text-lg text-white/60 max-w-2xl mx-auto">
+            {t(
+              'End-to-end digital systems designed to solve real problems and grow your business.',
+              'Systèmes numériques de bout en bout conçus pour résoudre de vrais problèmes et développer votre entreprise.'
+            )}
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, index) => (
             <motion.div
               key={service.name}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+              transition={{ duration: 0.5, delay: index * 0.07 }}
               viewport={{ once: true }}
-              className="group relative bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+              className="brand-card group"
             >
-              <div className="flex items-center mb-6">
-                <div className={`w-12 h-12 bg-${service.color}-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                  <service.icon className={`w-6 h-6 text-${service.color}-600`} />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 ml-4">
-                  {service.name}
-                </h3>
+              <div className="w-11 h-11 bg-gold/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-gold transition-colors duration-300">
+                <service.icon size={22} weight="duotone" className="text-gold group-hover:text-navy transition-colors duration-300" />
               </div>
-              
-              <p className="text-gray-600 mb-6 leading-relaxed">
-                {service.description}
-              </p>
-              
-              <ul className="space-y-3">
-                {service.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="flex items-start">
-                    <div className={`w-2 h-2 bg-${service.color}-500 rounded-full mt-2 mr-3 flex-shrink-0`}></div>
-                    <span className="text-sm text-gray-600">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-              
-              <div className="mt-6 pt-6 border-t border-gray-100">
-                <a
-                  href="#contact"
-                  className={`inline-flex items-center text-${service.color}-600 hover:text-${service.color}-700 font-medium text-sm group-hover:underline`}
-                >
-                  Learn more
-                  <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </a>
-              </div>
+              <h3 className="text-lg font-heading font-semibold text-white mb-2">{service.name}</h3>
+              <p className="text-sm text-white/50 leading-relaxed">{service.description}</p>
             </motion.div>
           ))}
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mt-16"
-        >
-          <div className="bg-gradient-to-r from-primary-50 to-secondary-50 rounded-2xl p-8">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">
-              Ready to Transform Your Operations?
-            </h3>
-            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              Let's discuss how AI automation can streamline your processes, reduce costs, and boost efficiency.
-            </p>
-            <a
-              href="#contact"
-              className="btn-primary inline-flex items-center"
-            >
-              Schedule a Consultation
-            </a>
-          </div>
-        </motion.div>
       </div>
     </section>
   )
-} 
+}

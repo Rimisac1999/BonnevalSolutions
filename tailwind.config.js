@@ -1,43 +1,57 @@
 /** @type {import('tailwindcss').Config} */
+// Color values sourced from config/brand.ts (Brand Guidelines V0)
 module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './contexts/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
       colors: {
-        primary: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
+        // Primary brand colors (§3.1)
+        navy: '#000B24',
+        red: {
+          DEFAULT: '#E43606',
+          light: '#F56E4E',
         },
-        secondary: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',
-          500: '#64748b',
-          600: '#475569',
-          700: '#334155',
-          800: '#1e293b',
-          900: '#0f172a',
+        blue: {
+          DEFAULT: '#008FB4',
+          light: '#25BBE0',
         },
+        gold: {
+          DEFAULT: '#DE8D06',
+          light: '#F5B520',
+        },
+        // Extended palette (§3.2)
+        'off-white': '#F0F2F5',
+        'mid-gray': '#6B7280',
+        'dark-gray': '#1F2937',
+        // Surface elevation (§3.6)
+        'surface-1': '#030E42',
+        'surface-2': '#061560',
+        'surface-3': '#0C2088',
+        // Semantic (§3.3)
+        success: '#10B981',
+        warning: '#DE8D06',
+        error: '#E43606',
+        info: '#3B82F6',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        heading: ['var(--font-space-grotesk)', 'system-ui', '-apple-system', 'sans-serif'],
+        body: ['var(--font-inter)', 'system-ui', '-apple-system', 'sans-serif'],
+      },
+      maxWidth: {
+        brand: '1280px',
+      },
+      borderRadius: {
+        card: '16px',
+        pill: '9999px',
+        input: '12px',
       },
       animation: {
-        'fade-in': 'fadeIn 0.5s ease-in-out',
+        'fade-in': 'fadeIn 0.5s ease-out',
         'slide-up': 'slideUp 0.5s ease-out',
       },
       keyframes: {
@@ -53,4 +67,4 @@ module.exports = {
     },
   },
   plugins: [],
-} 
+}

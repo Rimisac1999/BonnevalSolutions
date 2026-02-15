@@ -1,23 +1,31 @@
 import { getCompanyInfo } from '@/config/company'
+import { companyConfig } from '@/config/company'
+import Image from 'next/image'
 
 export default function ToolsFooter() {
   return (
-    <footer className="bg-white border-t border-gray-200 mt-auto">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <footer className="bg-surface-1 border-t border-white/[0.06] mt-auto">
+      <div className="container-brand px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center mb-4">
-              <span className="text-2xl font-bold text-gradient">{getCompanyInfo.name()}</span>
+              <Image
+                src={companyConfig.branding.logo}
+                alt="Bonneval Solutions"
+                width={140}
+                height={36}
+                className="h-8 w-auto"
+              />
             </div>
-            <p className="text-gray-600 mb-4 max-w-md">
-              Expert AI automation and process optimization consultancy for SMEs and corporate departments. 
-              Specializing in workflow automation, AI agents, and custom digital solutions.
+            <p className="text-white/50 mb-4 max-w-md">
+              AI automation and process optimization for B2B companies.
+              Specializing in workflow automation, AI agents, and custom digital systems.
             </p>
             <div className="flex space-x-4">
               <a
                 href="https://linkedin.com/company/bonnevalsolutions"
-                className="text-gray-400 hover:text-gray-600 transition-colors"
+                className="text-white/30 hover:text-white/60 transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -28,7 +36,7 @@ export default function ToolsFooter() {
               </a>
               <a
                 href="https://github.com/bonnevalsolutions"
-                className="text-gray-400 hover:text-gray-600 transition-colors"
+                className="text-white/30 hover:text-white/60 transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -42,22 +50,22 @@ export default function ToolsFooter() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">
+            <h3 className="text-xs font-semibold text-white/50 tracking-wider uppercase mb-4">
               Quick Links
             </h3>
             <ul className="space-y-3">
               <li>
-                <a href="/" className="text-gray-600 hover:text-gray-900 transition-colors">
+                <a href="/" className="text-white/40 hover:text-blue-light transition-colors">
                   Tools Home
                 </a>
               </li>
               <li>
-                <a href="/memorizer" className="text-gray-600 hover:text-gray-900 transition-colors">
+                <a href="/memorizer" className="text-white/40 hover:text-blue-light transition-colors">
                   Memorizer Tool
                 </a>
               </li>
               <li>
-                <a href="https://bonnevalsolutions.com" className="text-gray-600 hover:text-gray-900 transition-colors">
+                <a href="https://bonnevalsolutions.com" className="text-white/40 hover:text-blue-light transition-colors">
                   Main Site
                 </a>
               </li>
@@ -66,35 +74,22 @@ export default function ToolsFooter() {
 
           {/* External Services */}
           <div>
-            <h3 className="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">
+            <h3 className="text-xs font-semibold text-white/50 tracking-wider uppercase mb-4">
               Services
             </h3>
             <ul className="space-y-3">
               <li>
-                <a
-                  href="https://intranet.bonnevalsolutions.com"
-                  className="text-gray-600 hover:text-gray-900 transition-colors"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a href="https://intranet.bonnevalsolutions.com" className="text-white/40 hover:text-blue-light transition-colors" target="_blank" rel="noopener noreferrer">
                   Intranet
                 </a>
               </li>
               <li>
-                <a
-                  href="https://client.bonnevalsolutions.com"
-                  className="text-gray-600 hover:text-gray-900 transition-colors"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a href="https://client.bonnevalsolutions.com" className="text-white/40 hover:text-blue-light transition-colors" target="_blank" rel="noopener noreferrer">
                   Client Portal
                 </a>
               </li>
               <li>
-                <a
-                  href="mailto:contact@bonnevalsolutions.com"
-                  className="text-gray-600 hover:text-gray-900 transition-colors"
-                >
+                <a href={`mailto:${getCompanyInfo.contactEmail()}`} className="text-white/40 hover:text-blue-light transition-colors">
                   Contact Us
                 </a>
               </li>
@@ -103,19 +98,19 @@ export default function ToolsFooter() {
         </div>
 
         {/* Bottom section */}
-        <div className="mt-8 pt-8 border-t border-gray-200">
+        <div className="mt-8 pt-8 border-t border-white/[0.06]">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-500 text-sm">
+            <p className="text-white/30 text-sm">
               {getCompanyInfo.copyright()}
             </p>
-            <div className="mt-4 md:mt-0 flex space-x-6 text-sm text-gray-500">
-              <a href="/privacy" className="hover:text-gray-900 transition-colors">
+            <div className="mt-4 md:mt-0 flex space-x-6 text-sm text-white/30">
+              <a href="/privacy" className="hover:text-blue-light transition-colors">
                 Privacy Policy
               </a>
-              <a href="/terms" className="hover:text-gray-900 transition-colors">
+              <a href="/terms" className="hover:text-blue-light transition-colors">
                 Terms of Service
               </a>
-              <a href="/cookies" className="hover:text-gray-900 transition-colors">
+              <a href="/cookies" className="hover:text-blue-light transition-colors">
                 Cookie Policy
               </a>
             </div>

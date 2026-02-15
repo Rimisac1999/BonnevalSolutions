@@ -21,86 +21,61 @@ export const getDomainConfig = () => {
 }
 
 export const companyConfig = {
-  // Basic Company Information
   name: isPreview ? 'Preview Bonneval Solutions' : 'Bonneval Solutions',
   fullName: isPreview ? 'Preview Bonneval Solutions SASU' : 'Bonneval Solutions SASU',
-  legalForm: 'EI (Entrepreuneur Individuel)',
+  legalForm: 'EI (Entrepreneur Individuel)',
   founded: '2024',
-  industry: 'AI Automation & Process Optimization Consultancy',
-  
-  // Contact Information
+  industry: 'Digital Solutions & Innovation',
+
   contact: {
     email: 'contact@bonnevalsolutions.com',
     phone: '+33 (0) 6 09 55 83 96',
-    phoneFormatted: '+33 1 6 09 55 83 96',
+    phoneFormatted: '+33 6 09 55 83 96',
     location: 'France (Remote & On-site)',
     businessHours: '24/7 Time Zone Agnostic',
     timezone: 'CET (Central European Time)',
   },
-  
-  // Business Information
+
   business: {
-    type: 'Consultancy',
-    focus: 'AI Automation & Process Optimization',
-    targetClients: [
-      'Offshore logistics companies',
-      'Construction & energy sectors',
-      'Project management-heavy industries',
-      'SMEs lacking automation expertise',
-      'Corporate departments seeking efficiency',
-      'Operations-heavy businesses'
-    ],
+    type: 'Digital Solutions Agency',
+    focus: 'Innovative Digital Solutions',
     services: [
-      'Workflow Automation',
+      'Websites & Web Apps',
+      'Digital Marketing',
+      'Automation',
       'AI Agents & Chatbots',
-      'Process Digitization',
-      'Data Analytics & Reporting',
-      'System Integration',
-      'Custom AI Solutions'
+      'Voice Agents',
+      'Custom Solutions',
+      'Local SEO',
     ],
-    technologies: [
-      'Voiceflow & ChatGPT',
-      'n8n Workflow Automation',
-      'Airtable & Notion',
-      'Custom AI Solutions',
-      'API Integrations',
-      'Data Analytics Platforms'
-    ]
   },
-  
-  // Social Media & Online Presence
+
   social: {
     linkedin: 'https://linkedin.com/company/bonnevalsolutions',
-    twitter: 'Coming soon',
-    github: 'coming Soon',
     website: 'https://bonnevalsolutions.com'
   },
-  
-  // External Services
+
   external: {
     intranet: 'https://intranet.bonnevalsolutions.com',
     client: 'https://client.bonnevalsolutions.com',
     tools: `https://${getDomainConfig().tools}`
   },
-  
-  // Legal & Compliance
+
   legal: {
-    copyright: isPreview ? '© 2024 Preview Bonneval Solutions. All rights reserved.' : '© 2024 Bonneval Solutions. All rights reserved.',
-    privacyPolicy: '/PrivacyPolicy',
-    termsOfService: '/TermsOfService',
-    cookiePolicy: '/CookiePolicy'
+    copyright: `© ${new Date().getFullYear()} Bonneval Solutions. All rights reserved.`,
+    privacyPolicy: '/privacy-policy',
+    termsOfService: '/terms-of-service',
+    cookiePolicy: '/cookie-policy'
   },
-  
-  // Branding & Messaging
+
   branding: {
-    tagline: 'Transform Your Business with AI Automation',
-    description: 'Expert AI automation and process optimization consultancy for SMEs and corporate departments. Specializing in workflow automation, AI agents, and custom digital solutions.',
-    mission: 'To democratize AI automation for businesses of all sizes, making complex processes simple and efficient.',
-    vision: isPreview ? 'Position Preview Bonneval Solutions as a trusted boutique AI integration partner.' : 'Position Bonneval Solutions as a trusted boutique AI integration partner.'
+    logo: '/logo.svg',
+    tagline: 'Build Smarter Digital Systems',
+    description: 'We build websites and integrate AI into business operations. Measurable automation for B2B companies.',
+    mission: 'To solve real problems with smart, scalable digital systems.',
   }
 }
 
-// Helper functions for common use cases
 export const getCompanyInfo = {
   name: () => companyConfig.name,
   fullName: () => companyConfig.fullName,
@@ -113,5 +88,4 @@ export const getCompanyInfo = {
   description: () => companyConfig.branding.description
 }
 
-// Export individual sections for specific use cases
 export const { contact, business, social, external, legal, branding } = companyConfig
