@@ -1,281 +1,287 @@
 # Bonneval Solutions Website
 
-A modern, professional website for Bonneval Solutions - AI Automation & Process Optimization Consultancy, featuring a comprehensive tools platform, subdomain architecture, and centralized company configuration system.
+A modern, professional website for **Bonneval Solutions** -- Digital Solutions & Innovation agency, featuring a tools platform, subdomain architecture, centralized company configuration, brand design system, and bilingual support.
 
-## 🚀 Features
+**Live**: [bonnevalsolutions.com](https://bonnevalsolutions.com)
 
-### **Main Website**
-- **Modern Design**: Clean, professional design with smooth animations
-- **Responsive**: Fully responsive across all devices with fixed mobile navigation
-- **Fast Performance**: Built with Next.js 14 and optimized for speed
-- **SEO Optimized**: Proper meta tags and structured data
-- **Contact Form**: Interactive contact form with validation
-- **Smooth Animations**: Framer Motion animations for enhanced UX
+## Features
 
-### **Tools Platform (Subdomain Architecture)**
+### Main Website
+- **Modern Design**: Dark-themed corporate design built on a formal brand design system (`config/brand.ts`)
+- **Responsive**: Fully responsive across all devices with a fixed mobile navigation
+- **Fast Performance**: Built with Next.js 14 (App Router) and optimized for speed
+- **SEO Optimized**: OpenGraph, Twitter cards, meta tags, and structured data
+- **Contact Form**: Interactive contact form with validation and WhatsApp integration
+- **Smooth Animations**: Framer Motion animations throughout
+- **Bilingual**: English / French language toggle via React context
+
+### Tools Platform (Subdomain Architecture)
 - **Dedicated Subdomain**: `tools.bonnevalsolutions.com` with clean separation
-- **Independent Components**: Separate header/footer for tools pages
+- **Independent Layout**: Separate header/footer for the tools pages
 - **Memorizer Tool**: AI-powered text memorization tool
-- **Scalable Architecture**: Easy to add new tools
-- **Professional Branding**: Consistent with main site branding
-- **Responsive Design**: Mobile-optimized tools interface
+- **Scalable Architecture**: Easy to add new tools under `app/tools-domain/`
+- **Consistent Branding**: Shares the brand design system with the main site
 
-### **Company Configuration System**
-- **Centralized Data**: All company information in one place (`config/company.ts`)
-- **Easy Maintenance**: Update company info once, changes everywhere
-- **Environment Switching**: Simple switch between "Preview" and "Production" branding
-- **Type Safety**: Full TypeScript support
-- **Environment Variables**: Support for sensitive data protection
+### Legal Pages
+- **Terms of Service** (`/terms-of-service`)
+- **Privacy Policy** (`/privacy-policy`)
+- **Cookie Policy** (`/cookie-policy`)
 
-### **Mobile Navigation**
-- **Fixed Mobile Menu**: Full screen coverage on mobile devices
-- **Smooth Animations**: Proper transitions and backdrop effects
-- **Touch Friendly**: Optimized for mobile interaction
-- **Consistent Experience**: Same behavior across main site and tools
+### Company Configuration System
+- **Centralized Data**: All company information in `config/company.ts`
+- **Environment-Aware Branding**: Automatic "Preview" vs "Production" branding based on Vercel branch (`VERCEL_GIT_COMMIT_REF`)
+- **Domain Routing**: Production and preview domains resolved from config
+- **Type Safety**: Full TypeScript support with exported helpers
 
-### **Integration Features**
-- **Voiceflow Chat Widget**: AI chat integration on main page
+### Brand Design System
+- **Single Source of Truth**: `config/brand.ts` defines all design tokens (Brand Guidelines V0, February 2026)
+- **Colors**: Navy, Red, Blue, Gold primary palette with surface elevation and semantic colors
+- **Typography**: Space Grotesk (headings) + Inter (body) with a responsive clamp-based type scale
+- **Components**: Token definitions for buttons, cards, navigation, inputs
+- **Gradients, Spacing, Radii, Animation**: Consistent values across the app
+- **Tailwind Integration**: Tokens mirrored in `tailwind.config.js`
+
+### Integration Features
+- **Voiceflow Chat Widget**: AI chat assistant on the main site
 - **External Portals**: Links to intranet and client portals
-- **Smooth Navigation**: Hover effects and animations
-- **Mobile-First**: Responsive design for all screen sizes
+- **Language Toggle**: EN/FR switching via `contexts/LanguageContext.tsx`
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 bonneval-solutions/
 ├── app/
 │   ├── globals.css                    # Global styles and Tailwind imports
-│   ├── layout.tsx                     # Root layout (uses company config)
+│   ├── layout.tsx                     # Root layout (fonts, metadata, Voiceflow, language provider)
 │   ├── page.tsx                       # Homepage
-│   ├── client/                        # Client login page
-│   ├── intranet/                      # Intranet login page
-│   └── tools-domain/                  # 🆕 Tools subdomain structure
-│       ├── layout.tsx                 # Tools layout (uses company config)
+│   ├── client/page.tsx                # Client login page
+│   ├── intranet/page.tsx              # Intranet login page
+│   ├── cookie-policy/page.tsx         # Cookie policy
+│   ├── privacy-policy/page.tsx        # Privacy policy
+│   ├── terms-of-service/page.tsx      # Terms of service
+│   └── tools-domain/                  # Tools subdomain pages
+│       ├── layout.tsx                 # Tools layout
 │       ├── page.tsx                   # Tools landing page
-│       ├── memorizer/page.tsx         # Memorizer tool page
-│       └── components/                # Tools-specific components
-│           ├── ToolsHeader.tsx        # Tools header (uses company config)
-│           └── ToolsFooter.tsx        # Tools footer (uses company config)
+│       ├── memorizer/page.tsx         # Memorizer tool
+│       └── components/
+│           ├── ToolsHeader.tsx        # Tools header
+│           └── ToolsFooter.tsx        # Tools footer
 ├── components/
-│   ├── Header.tsx                     # Main site header (uses company config)
+│   ├── Header.tsx                     # Main site header
 │   ├── Hero.tsx                       # Hero section
 │   ├── Services.tsx                   # Services showcase
 │   ├── About.tsx                      # About section
-│   ├── Contact.tsx                    # Contact form
+│   ├── Contact.tsx                    # Contact form (email + WhatsApp)
 │   ├── Footer.tsx                     # Main site footer
-│   ├── VoiceflowWidget.tsx            # AI chat widget
-│   └── tools/                         # Shared tool components
+│   ├── VoiceflowWidget.tsx            # AI chat widget (client-side)
+│   └── tools/
 │       └── MemorizerTool.tsx          # Memorizer tool component
 ├── config/
-│   └── company.ts                     # 🆕 Centralized company configuration
+│   ├── company.ts                     # Company information & environment-aware branding
+│   └── brand.ts                       # Brand design tokens (colors, typography, spacing, etc.)
+├── contexts/
+│   └── LanguageContext.tsx             # EN/FR language provider
 ├── .github/
 │   └── workflows/
-│       └── pre-production-deploy.yml  # 🆕 GitHub Actions for Pre-Production Testing
-├── public/                            # Static assets
-├── vercel.json                        # 🆕 Vercel configuration for subdomains
-├── tailwind.config.js                 # Tailwind configuration
-└── SUBDOMAIN_SETUP.md                 # 🆕 Subdomain setup guide
+│       └── pre-production-deploy.yml  # GitHub Actions CI/CD
+├── public/
+│   ├── logo.svg                       # Brand logo (dark background)
+│   └── logo-light.svg                 # Brand logo (light background)
+├── next.config.js                     # Next.js config (host-based rewrites, headers)
+├── vercel.json                        # Vercel deployment config (rewrites, headers, regions)
+├── render.yaml                        # Render deployment config (alternative)
+├── tailwind.config.js                 # Tailwind CSS config (brand tokens)
+├── tsconfig.json                      # TypeScript config
+├── package.json                       # Dependencies & scripts
+└── SUBDOMAIN_SETUP.md                 # Subdomain setup guide
 ```
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-- **Framework**: Next.js 14 with App Router
+- **Framework**: Next.js 14 (App Router)
 - **Language**: TypeScript
-- **Styling**: Tailwind CSS
+- **Styling**: Tailwind CSS with custom brand tokens
 - **Animations**: Framer Motion
-- **Icons**: Heroicons & Lucide React
-- **Font**: Inter (Google Fonts)
-- **Configuration**: Centralized company config system
-- **Deployment**: Vercel with GitHub Actions
-- **Environment Management**: Pre-Production Testing environment
+- **Icons**: Heroicons, Lucide React, Phosphor Icons
+- **Fonts**: Space Grotesk (headings) + Inter (body) via `next/font/google`
+- **Configuration**: Centralized company config + brand design system
+- **Deployment**: Vercel (primary), Render (alternative)
+- **CI/CD**: GitHub Actions
 
-## 📦 Installation
+## Getting Started
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd bonneval-solutions
-   ```
+### Prerequisites
+- Node.js 18+
+- npm
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+### Installation
 
-3. **Set up environment variables** (optional)
-   ```bash
-   # Create .env.local file
-   NEXT_PUBLIC_COMPANY_NAME="Bonneval Solutions"
-   COMPANY_CONTACT_EMAIL="contact@bonnevalsolutions.com"
-   COMPANY_CONTACT_PHONE="+33 (0)1 XX XX XX XX"
-   ```
-
-4. **Run the development server**
-   ```bash
-   npm run dev
-   ```
-
-5. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
-
-## 🌐 Subdomain Setup
-
-### **Tools Subdomain**: `tools.bonnevalsolutions.com`
-- **Purpose**: Dedicated tools platform with clean separation
-- **Benefits**: Independent development, different branding, scalable architecture
-- **Routing**: Automatic routing from subdomain to `/tools-domain` pages
-
-### **DNS Configuration**
-```
-Type: CNAME
-Name: tools
-Value: cname.vercel-dns-017.com
-TTL: 4 h
+```bash
+git clone https://github.com/<your-org>/Bonnevalsolutions.git
+cd Bonnevalsolutions
+npm install
 ```
 
-### **Vercel Configuration**
-- **Automatic Detection**: Vercel detects CNAME record
-- **SSL Certificates**: Automatically handled
-- **Preview Deployments**: Available for testing
+### Development
 
-## 🚀 Deployment
+```bash
+npm run dev
+```
 
-### **Pre-Production Testing Environment**
-- **Branch**: `test-cursor-agent`
-- **Environment**: "Pre-Production-Testing" in GitHub
-- **Automatic Deployment**: GitHub Actions workflow on push
-- **Preview Branding**: "Preview Bonneval Solutions" for testing
+Open [http://localhost:3000](http://localhost:3000). Branding defaults to production locally. To simulate preview branding:
 
-### **Production Deployment**
+```bash
+VERCEL_GIT_COMMIT_REF=preview npm run dev
+```
+
+### Build & Start
+
+```bash
+npm run build
+npm start
+```
+
+## Domains & Subdomain Architecture
+
+| Domain | Purpose |
+|---|---|
+| `bonnevalsolutions.com` | Production main site |
+| `www.bonnevalsolutions.com` | Redirects to apex |
+| `preview.bonnevalsolutions.com` | Preview environment (preview branding) |
+| `tools.bonnevalsolutions.com` | Tools platform (production) |
+| `preview-tools.bonnevalsolutions.com` | Tools platform (preview) |
+
+Host-based rewrites are configured in both `next.config.js` and `vercel.json`. Requests to `tools.*` are rewritten to `app/tools-domain/*` at runtime. See `SUBDOMAIN_SETUP.md` for full DNS and Vercel setup instructions.
+
+## Deployment
+
+### Production
 - **Branch**: `main`
-- **Environment**: Production in Vercel
-- **Production Branding**: "Bonneval Solutions" (from company config)
+- **Platform**: Vercel
+- **Branding**: "Bonneval Solutions"
+- Push to `main` triggers an automatic production deployment.
 
-### **GitHub Actions Workflow**
-- **Trigger**: Push to `test-cursor-agent` branch
-- **Environment**: Pre-Production-Testing
-- **Actions**: Build, test, deploy to Vercel
-- **Secrets Required**: `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`
+### Preview
+- **Branch**: `preview` (or any non-main branch)
+- **Platform**: Vercel preview deployments
+- **Branding**: "Preview Bonneval Solutions"
 
-## 🔧 Configuration
+### CI/CD (GitHub Actions)
+The workflow in `.github/workflows/pre-production-deploy.yml` runs on pushes to `test-cursor-agent` and builds, tests, and deploys to Vercel using the Pre-Production-Testing environment.
 
-### **Company Information**
-All company information is centralized in `config/company.ts`:
+**Required secrets**: `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`
+
+## Configuration
+
+### Company Information (`config/company.ts`)
+
+All company details are centralized and environment-aware:
 
 ```typescript
-export const companyConfig = {
-  name: 'Preview Bonneval Solutions',        // Change this for production
-  fullName: 'Preview Bonneval Solutions SASU',
-  contact: { /* ... */ },
-  business: { /* ... */ },
-  legal: { /* ... */ },
-  branding: { /* ... */ }
+companyConfig = {
+  name: 'Bonneval Solutions',           // or 'Preview Bonneval Solutions' on preview
+  legalForm: 'EI (Entrepreneur Individuel)',
+  founded: '2024',
+  industry: 'Digital Solutions & Innovation',
+  contact: { email, phone, location, businessHours, timezone },
+  business: { type, focus, services: [...] },
+  social: { linkedin, website },
+  external: { intranet, client, tools },
+  legal: { copyright, privacyPolicy, termsOfService, cookiePolicy },
+  branding: { logo, tagline, description, mission },
 }
 ```
 
-### **Switching Between Environments**
-1. **Preview Mode**: `name: 'Preview Bonneval Solutions'`
-2. **Production Mode**: `name: 'Bonneval Solutions'`
-3. **Single Change**: Update one line in config file
+### Brand Design Tokens (`config/brand.ts`)
 
-## 📱 Mobile Navigation
+Design tokens following Brand Guidelines V0 (February 2026):
 
-### **Fixed Issues**
-- **Problem**: Mobile menu only showed 50px scrollable area
-- **Solution**: Full screen coverage with proper positioning
-- **Implementation**: Fixed in both main header and tools header
-- **Features**: Backdrop click-to-close, smooth animations, proper scrolling
+- **Colors**: Navy `#000B24`, Red `#E43606`, Blue `#008FB4`, Gold `#DE8D06` + surface elevation + semantic
+- **Typography**: Space Grotesk headings, Inter body, responsive clamp scale
+- **Spacing**: Base-4 system (4px increments)
+- **Layout**: 1280px max-width, 12-column grid, 24px gutter
+- **Components**: Button, card, nav, input token definitions
+- **Animation**: Micro (150ms), entrance (500ms), page transition (300ms)
 
-### **Mobile Menu Features**
-- **Full Screen Coverage**: Menu covers entire mobile screen
-- **Smooth Animations**: Proper transitions and backdrop effects
-- **Touch Friendly**: Optimized for mobile interaction
-- **Consistent Behavior**: Same experience across all pages
+## Services
 
-## 📋 To-Do List
+Bonneval Solutions offers:
 
-### **🔄 In Progress**
-- [x] ~~Setup Pre-Production Testing environment~~
-- [x] ~~Fix mobile navigation issues~~
-- [x] ~~Implement tools subdomain architecture~~
-- [x] ~~Centralize company configuration~~
-- [x] ~~Setup GitHub Actions workflow~~
+- Websites & Web Apps
+- Digital Marketing
+- Automation
+- AI Agents & Chatbots
+- Voice Agents
+- Custom Solutions
+- Local SEO
 
-### **⏳ Next Steps**
+## To-Do
+
+### Completed
+- [x] Setup pre-production testing environment
+- [x] Fix mobile navigation issues
+- [x] Implement tools subdomain architecture
+- [x] Centralize company configuration
+- [x] Setup GitHub Actions workflow
+- [x] Create legal pages (Terms, Privacy, Cookies)
+- [x] Implement brand design system
+- [x] Add bilingual support (EN/FR)
+- [x] Main design overhaul with corporate policy
+
+### Next Steps
 - [ ] **Intranet Platform Setup**
   - [ ] Configure OVH private server
   - [ ] Setup Docker containers for ERP/CRM
   - [ ] Configure `intranet.bonnevalsolutions.com` DNS
   - [ ] Implement authentication system
-  - [ ] Setup internal tools and workflows
 
 - [ ] **Client Portal Setup**
   - [ ] Configure OVH private server
   - [ ] Setup Docker containers for client portal
   - [ ] Configure `client.bonnevalsolutions.com` DNS
   - [ ] Implement client authentication
-  - [ ] Setup client-specific tools and dashboards
 
-- [ ] **Production Deployment**
-  - [ ] Update company config to production values
-  - [ ] Merge `test-cursor-agent` to `main`
-  - [ ] Configure production environment in Vercel
-  - [ ] Setup production monitoring and analytics
-
-### **🔮 Future Enhancements**
+### Future Enhancements
 - [ ] Add more tools to the tools platform
-- [ ] Implement advanced analytics and reporting
+- [ ] Implement analytics and reporting
 - [ ] Setup automated testing pipeline
 - [ ] Add performance monitoring
-- [ ] Implement A/B testing capabilities
+- [ ] Full i18n with structured translation files
 
-## 📝 Changelog
+## Changelog
 
-### **Version 2.0.0** - Major Architecture Update (Current)
-*Released: August 2024*
+### v3.0.0 -- Design & Brand System Overhaul (Current)
+*February 2026*
 
-#### **🚀 New Features**
-- **Tools Subdomain Architecture**: Complete separation of tools platform
-- **Pre-Production Testing Environment**: Dedicated testing environment with GitHub Actions
-- **Centralized Company Configuration**: Single source of truth for all company information
-- **Mobile Navigation Fixes**: Full screen mobile menu with proper scrolling
+- **Brand Design System**: Formal design tokens in `config/brand.ts` (colors, typography, spacing, components, animation)
+- **Corporate Design Refresh**: Dark-themed corporate aesthetic aligned with Brand Guidelines V0
+- **Legal Pages**: Terms of Service, Privacy Policy, Cookie Policy
+- **Bilingual Support**: EN/FR language context and toggle
+- **Updated Company Profile**: Rebranded as "Digital Solutions & Innovation" agency; services expanded
+- **Tailwind Integration**: Brand tokens mapped into `tailwind.config.js`
+- **Font Update**: Space Grotesk (headings) + Inter (body)
+- **WhatsApp Contact**: Added WhatsApp integration to contact form
 
-#### **🏗️ Architecture Changes**
-- **New Directory Structure**: `app/tools-domain/` for tools subdomain
-- **Component Reorganization**: Tools components moved to appropriate locations
-- **Routing Configuration**: Next.js rewrites for subdomain handling
-- **Vercel Configuration**: Subdomain support and deployment optimization
+### v2.0.0 -- Architecture Update
+*August 2024*
 
-#### **🔧 Technical Improvements**
-- **GitHub Actions Workflow**: Automated deployment to Pre-Production Testing
-- **Mobile Menu Overhaul**: Fixed positioning, scrolling, and user experience
-- **Company Config Integration**: All components now use centralized configuration
-- **TypeScript Enhancements**: Better type safety and code organization
+- **Tools Subdomain Architecture**: `tools.bonnevalsolutions.com` via host-based rewrites
+- **Pre-Production Testing**: Dedicated environment with GitHub Actions
+- **Centralized Company Config**: Environment-aware branding in `config/company.ts`
+- **Mobile Navigation**: Full-screen mobile menu overhaul
+- **Vercel Deployment**: Subdomain support and deployment optimization
 
-#### **📱 User Experience**
-- **Mobile Navigation**: Fixed hamburger menu issues on mobile devices
-- **Consistent Branding**: Unified company information across all pages
-- **Better Performance**: Optimized routing and component loading
-- **Professional Tools Interface**: Dedicated tools platform with proper navigation
+### v1.0.0 -- Initial Release
+*July 2024*
 
-### **Version 1.0.0** - Initial Release
-*Released: July 2024*
-
-#### **🎯 Core Features**
-- **Main Website**: Professional AI automation consultancy website
-- **Tools Platform**: Basic tools implementation with memorizer tool
-- **Responsive Design**: Mobile-first design approach
-- **Contact System**: Interactive contact forms and communication
-
-#### **🛠️ Technical Foundation**
-- **Next.js 14**: Modern React framework with App Router
-- **Tailwind CSS**: Utility-first CSS framework
-- **TypeScript**: Full type safety implementation
-- **Framer Motion**: Smooth animations and transitions
+- Main website with Hero, Services, About, Contact sections
+- Tools platform with Memorizer tool
+- Responsive design with Framer Motion animations
+- Next.js 14 + TypeScript + Tailwind CSS foundation
 
 ---
 
-**Last Updated**: August 2024  
-**Current Version**: 2.0.0  
-**Status**: Pre-Production Testing Phase  
-**Next Milestone**: Intranet & Client Portal Setup 
+**Last Updated**: February 2026
+**Current Version**: 3.0.0
+**Status**: Production
+**Next Milestone**: Intranet & Client Portal Setup
