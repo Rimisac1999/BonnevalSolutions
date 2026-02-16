@@ -181,7 +181,7 @@ All company details are centralized and environment-aware:
 companyConfig = {
   name: 'Bonneval Solutions',           // or 'Preview Bonneval Solutions' on preview
   legalForm: 'EI (Entrepreneur Individuel)',
-  founded: '2024',
+  founded: '2025',
   industry: 'Digital Solutions & Innovation',
   contact: { email, phone, location, businessHours, timezone },
   business: { type, focus, services: [...] },

@@ -15,13 +15,36 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    setSubmitStatus('success')
-    setIsSubmitting(false)
-    setTimeout(() => {
-      setSubmitStatus('idle')
-      setFormData({ name: '', email: '', message: '' })
-    }, 3000)
+    setSubmitStatus('idle')
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY,
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          from_name: 'Bonneval Solutions Website',
+          subject: `New contact from ${formData.name}`,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (data.success) {
+        setSubmitStatus('success')
+        setFormData({ name: '', email: '', message: '' })
+      } else {
+        setSubmitStatus('error')
+      }
+    } catch {
+      setSubmitStatus('error')
+    } finally {
+      setIsSubmitting(false)
+      setTimeout(() => setSubmitStatus('idle'), 5000)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -67,6 +90,14 @@ export default function Contact() {
               <div className="mb-6 p-4 bg-success/10 border border-success/30 rounded-card">
                 <p className="text-success font-medium">
                   {t('Message sent! We\'ll be in touch soon.', 'Message envoyé ! Nous vous recontacterons bientôt.')}
+                </p>
+              </div>
+            )}
+
+            {submitStatus === 'error' && (
+              <div className="mb-6 p-4 bg-red/10 border border-red/30 rounded-card">
+                <p className="text-red-light font-medium">
+                  {t('Something went wrong. Please try again.', 'Une erreur est survenue. Veuillez réessayer.')}
                 </p>
               </div>
             )}
