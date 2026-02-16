@@ -16,6 +16,9 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
+  icons: {
+    icon: '/bonneval-icon-only.svg',
+  },
   title: `${getCompanyInfo.name()} — Build Smarter Digital Systems`,
   description: 'We build websites and integrate AI into business operations: lead generation, cold outreach, voice assistants, and chatbots. Measurable automation for B2B companies.',
   keywords: 'digital solutions, web development, AI agents, chatbots, voice agents, automation, lead generation, B2B',
